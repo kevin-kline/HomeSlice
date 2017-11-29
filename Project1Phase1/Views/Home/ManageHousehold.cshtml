@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["EditHouse"] = "Edit Household";
+    ViewData["Edit"] = "Add/Remove Roommate(s)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewData["EditHouse"]</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            <h4>Change Household Image & Information.</h4>
+            <hr />
+
+            <action ="" method="post" enctype="multipart/form-data">
+                <fieldset>
+                    <h4> Upload Household Image </h4>
+                    <label for="Image">Image</label>
+                    <input type="file" name="Image" />
+                    <br />
+                    <input type="submit" value="Upload" />
+                </fieldset>
+
+                <br />
+                <div class="form-group">
+                    <label>Household Name</label>
+                    <input class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Household Address</label>
+                    <input class="form-control" />
+                </div>
+
+                <br />
+                <button type="submit" class="btn btn-default">Join</button>
+</form>
+    </div>
+</div>
+
+<h2>@ViewData["Edit"]</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            <h4>Create a New Household Account & Add Roommates.</h4>
+            <hr />
+
+                <div id="form1" runat="server">
+                    <div id="dynamicControlDiv1">
+                        <a h ref="a" onclick="createTextBox1()"><h4>Add Roomate(s)</h4></a>
+                    </div>
+                    <asp:button id="submitButton" runat="server" text="Submit"></asp:button>
+                </div>
+
+            <div id="form2" runat="server">
+                <div id="dynamicControlDiv2">
+                    <a h ref="a" onclick="createTextBox2()"><h4>Remove Roomate(s)</h4></a>
+                </div>
+                <asp:button id="submitButton" runat="server" text="Submit"></asp:button>
+            </div>
+
+            <script type="text/javascript">
+
+                                function createTextBox1() {
+                                    var controlRef = document.createElement('input');
+                                    controlRef.type = 'text';
+                                    controlRef.name = 'dynamicTextBox';
+                                    controlRef.id = 'dynamicTextBox';
+                                    controlRef.size = 95;
+                                    document.getElementById('dynamicControlDiv1').appendChild(controlRef);
+                                }
+
+            </script>
+
+
+            <script type="text/javascript">
+
+                                function createTextBox2() {
+                                    var controlRef = document.createElement('input');
+                                    controlRef.type = 'text';
+                                    controlRef.name = 'dynamicTextBox';
+                                    controlRef.id = 'dynamicTextBox';
+                                    controlRef.size = 95;
+                                    document.getElementById('dynamicControlDiv2').appendChild(controlRef);
+                                }
+
+            </script>
+
+            <br />
+                <div>
+                    <button type="submit" class="btn btn-default">Add/Remove</button>
+                </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
