@@ -12,6 +12,8 @@ namespace Project1Phase1.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["Message Two"] = "Another application description";
+
             return View();
         }
 
