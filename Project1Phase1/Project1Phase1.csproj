@@ -5,6 +5,10 @@
     <UserSecretsId>aspnet-Project1Phase1-6E77D12B-70D2-45B8-88B9-E87929A423C4</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\css\StyleSheet.css" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
