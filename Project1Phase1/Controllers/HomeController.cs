@@ -16,22 +16,18 @@ namespace Project1Phase1.Controllers
 
             return View();
         }
-
-        public IActionResult About()
+        public IActionResult JoinCreate()
         {
-            ViewData["Message"] = "Your application description page.";
-            int oneHundred = 100;
-            string[] us = { "Michael", "Mina", "Kevin", "Will", "Thomas" };
             return View();
         }
-
-        public IActionResult Contact()
+        public IActionResult Profile()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
-
+        public IActionResult Relationship()
+        {
+            return View();
+        }
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
