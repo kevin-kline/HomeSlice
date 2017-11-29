@@ -4,5 +4,76 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Relationship</h2>
+<h2>UserA & UserB Relationship</h2>
+<div class="row">
+    <div class="col-md-4" style="text-align: center">
+        <h1 >UserA</h1>
+        <img src="~/images/profile.png" style="width: 75%"/>
+    </div>
+    <section class="col-md-4" style="text-align: center">
+        <img src="~/images/two-way-arrows.png" style="width: 25%; height: 100%; vertical-align:middle"/>
+    </section>
+    <section class="col-md-4" style="text-align: center">
+        <h1>UserB</h1>
+        <img src="~/images/profile.png" style="width: 75%"/>
+    </section>
+</div>
+<div class="row">
+    <lable>Total balance:</lable>
+    <input type="text" value="100 $" readonly>
+</div>
+<div class="row">
+    <lable>Payment amount:</lable>
+    <input type="text"/>
+    <form method="get" action="#">
+        <button type="submit">Make a payment</button>
+    </form>
+</div>
 
+<table style="border: double">
+    <caption style="text-align: center">
+        Balance histoy
+    </caption>
+    <colgroup>
+        <col style="width:20%">
+        <col style="width:20%">
+        <col style="width:20%">
+        <col style="width:20%">
+        <col style="width:20%">
+    </colgroup> 
+    <thead style="text-align: center">
+        <tr>
+            <th>Date</th>
+            <th>Type of bill</th>
+            <th>Total amount of bill</th>
+            <th>Amount of bill per person</th>
+            <th>Total balance</th>
+        </tr>
+    </thead>
+    <tbody style="text-align: left">
+        <tr>
+            <td>10-7-12</td>
+            <td>Rent</td>
+            <td>$ 2000</td>
+            <td>$ 500</td>
+            <td>+ $ 465</td>
+        </tr>
+        <tr>
+            <td>10-10-12</td>
+            <td>Gas</td>
+            <td>$ 100</td>
+            <td>$ 25</td>
+            <td>- $ 35</td>
+        </tr>
+        <tr>
+            <td>10-9-12</td>
+            <td>Hydro</td>
+            <td>$ 40</td>
+            <td>$ 10</td>
+            <td>- $ 10</td>
+        </tr>
+        <tr style="text-align: center">
+            <td colspan="5"><a>Show more...</a></td>
+        </tr>
+    </tbody>
+</table>
