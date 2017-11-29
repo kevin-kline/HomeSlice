@@ -20,8 +20,8 @@ namespace Project1Phase1.Controllers
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-            string[] us = { "Michael", "Mina", "Kevin", "Will", "Tom" };
             int oneHundred = 100;
+            string[] us = { "Michael", "Mina", "Kevin", "Will", "Thomas" };
             return View();
         }
 
