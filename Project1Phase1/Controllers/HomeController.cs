@@ -21,6 +21,7 @@ namespace Project1Phase1.Controllers
         {
             ViewData["Message"] = "Your application description page.";
             string[] us = { "Michael", "Mina", "Kevin", "Will", "Tom" };
+            int oneHundred = 100;
             return View();
         }
 
