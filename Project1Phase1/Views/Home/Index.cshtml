@@ -62,9 +62,41 @@
         </form>
     </div>
 </div>
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="text-center">Stay on top of expenses</h3>
+        <h3 class="text-center">Avoid unnecessary passive aggression</h3>
+        <h3 class="text-center">Take the math out of your month!</h3>
+    </div>
 </div>
+<br>
+<h3 class="text-center"><strong>Our Team</strong></h3>
+<div class="row"> 
+    <div class="col-sm-4">
+        <img class="img-circle img-responsive" src="~/images/TeamPhotos/mike.jpg" alt="Mike" />
+        <h5 class="text-center"><strong>Mike</strong></h5>
+    </div>
+    <div class="col-sm-4">
+        <img class="img-circle img-responsive" src="~/images/TeamPhotos/mina.jpg" alt="Mina" />
+        <h5 class="text-center"><strong>Mina</strong></h5>
+    </div>
+    <div class="col-sm-4">
+        <img class="img-circle img-responsive" src="~/images/TeamPhotos/kevin.jpg" alt="Kevin" />
+        <h5 class="text-center"><strong>Kevin</strong></h5>
+    </div>
+</div>
+<div class="row ">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-4">
+        <img class="img-circle img-responsive" src="~/images/TeamPhotos/tom.jpg" alt="Tom" />
+        <h5 class="text-center"><strong>Tom</strong></h5>
+    </div>
+    <div class="col-sm-4">
+        <img class="img-circle img-responsive" src="~/images/TeamPhotos/will.jpg" alt="Will" />
+        <h5 class="text-center"><strong>Will</strong></h5>
+    </div>
+        <div class="col-sm-2"></div>
+    </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

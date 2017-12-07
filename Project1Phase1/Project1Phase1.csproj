@@ -22,4 +22,12 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\images\TeamPhotos\kevin.jpg" />
+    <None Include="wwwroot\images\TeamPhotos\mike.jpg" />
+    <None Include="wwwroot\images\TeamPhotos\mina.jpg" />
+    <None Include="wwwroot\images\TeamPhotos\tom.jpg" />
+    <None Include="wwwroot\images\TeamPhotos\will.jpg" />
+  </ItemGroup>
+
 </Project>
