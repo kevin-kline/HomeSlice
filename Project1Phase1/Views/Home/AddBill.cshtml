@@ -5,104 +5,143 @@
 
 <h2>@ViewData["AddBill"]</h2>
 
-<div class="row">
-    <div class="col-md-6">
-        <h4>Bill Type</h4>
-        <hr />
-        <select class="form-control" id="AddBill" name="AddBill">
-            <option>Select Bill Type</option>
-            <option>Rent</option>
-            <option>Strata Fees</option>
-            <option>Hydro</option>
-            <option>Cable/Internet</option>
-            <option>Grocery</option>
-            <option>Other</option>
-        </select>
-        <br />
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-6">
-        <h4>Roommates On Bill</h4>
-        <hr />
-        <input id="RoommateA" type="checkbox" value="true" name="Kevin" />
-        <label for="RoommateA">&nbsp;Kevin</label> <br/>
-        <input id="RoommateB" type="checkbox" value="true" name="Michael" />
-        <label for="RoommateB">&nbsp;Michael</label> <br />
-        <input id="RoommateC" type="checkbox" value="true" name="Mina" />
-        <label for="RoommateC">&nbsp;Mina</label> <br />
-        <input id="RoommateD" type="checkbox" value="true" name="Tom" />
-        <label for="RoommateD">&nbsp;Tom</label> <br />
-        <input id="RoommateE" type="checkbox" value="true" name="Will" />
-        <label for="RoommateE">&nbsp;Will</label> <br />
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Bill Type</h4>
+            <hr />
+            <select class="form-control" id="AddBill" name="AddBill">
+                <option>Select Bill Type</option>
+                <option>Rent</option>
+                <option>Strata Fees</option>
+                <option>Hydro</option>
+                <option>Cable/Internet</option>
+                <option>Grocery</option>
+                <option id="other">Other</option> //here
+            </select>
+            <br />
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-6">
-        <h4>Frequency</h4>
-        <hr />
-        <form action="">
-                <input type="radio" id="one-time"
-                       name="recurring" value="one-time">
-                <label for="yes">One-Time Bill</label>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Roommates On Bill</h4>
+            <hr />
+            <input id="RoommateA" type="checkbox" value="true" name="Kevin" />
+            <label for="RoommateA">&nbsp;Kevin</label> <br />
+            <input id="RoommateB" type="checkbox" value="true" name="Michael" />
+            <label for="RoommateB">&nbsp;Michael</label> <br />
+            <input id="RoommateC" type="checkbox" value="true" name="Mina" />
+            <label for="RoommateC">&nbsp;Mina</label> <br />
+            <input id="RoommateD" type="checkbox" value="true" name="Tom" />
+            <label for="RoommateD">&nbsp;Tom</label> <br />
+            <input id="RoommateE" type="checkbox" value="true" name="Will" />
+            <label for="RoommateE">&nbsp;Will</label> <br />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Frequency</h4>
+            <hr />
+
+            <form name="form" id="form" action="">
+
+                <input type="radio" id="radioButton1" name="radioButton" value="in-campus" />
+                <label for="radioButton1">One Time</label>
                 <br/>
-                <input type="radio" id="recurring"
-                       name="recurring" value="recurring">
-                <label for="no">Recurring Bill</label>
+                <input type="radio" id="radioButton2" name="radioButton" value="of-campus" />
+                <label for="radioButton2">Recurring</label>
 
                 <br/><br/>
 
-            <select class="form-control" id="frequency" name="frequency">
-                <option>Select How Often Bill Occurs</option>
-                <option>Weekly</option>
-                <option>Bi-Weekly</option>
-                <option>Monthly</option>
-                <option>Bi-Monthly</option>
-                <option>Annually</option>
-            </select>
-        </form>
-        <br />
+                <select class="form-control" name="noOptions" id="noOptions" style="display: none">
+                    <option value="Choose an Option" selected="selected">Choose One-Time or Recurring Option</option>
+                </select>
+
+                <select class="form-control" name="icOptions" id="icOptions" style="display: none">
+                    <option value="Choose an Option" selected="selected">One-Time Payment</option>
+                </select>
+
+                <select class="form-control" name="ocOptions" id="ocOptions" style="display: none">
+                    <option value="Choose an Option" selected="selected">Recurring</option>
+                    <option value="ocOption1">Weekly</option>
+                    <option value="ocOption2">Bi-Weekly</option>
+                    <option value="ocOption1">Monthly</option>
+                    <option value="ocOption2">Bi-Monthly</option>
+                    <option value="ocOption1">Bi-Annually</option>
+                    <option value="ocOption2">Annually</option>
+                </select>
+
+                <select class="form-control" name="allOptions" id="allOptions" style="display: block">
+                    <option value="Choose an Option" selected="selected">Choose One-Time or Recurring Option</option>
+                </select>
+            </form>
+
+            <script>
+                window.document.getElementById("noOptions").style.display = "block";
+                window.document.getElementById("allOptions").style.display = "none";
+                function changeOptions() {
+                    var form = window.document.getElementById("form");
+                    var icOptions = window.document.getElementById("icOptions");
+                    var ocOptions = window.document.getElementById("ocOptions");
+
+                    window.document.getElementById("noOptions").style.display = "none";
+
+                    if (form.radioButton1.checked) {
+                        ocOptions.style.display = "none";
+                        icOptions.style.display = "block";
+                        icOptions.selectedIndex = 0;
+                    } else if (form.radioButton2.checked) {
+                        icOptions.style.display = "none";
+                        ocOptions.style.display = "block";
+                        ocOptions.selectedIndex = 0;
+                    }
+
+                }
+                window.document.getElementById("radioButton1").onclick = changeOptions;
+                window.document.getElementById("radioButton2").onclick = changeOptions;
+            </script>
+            <br />
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-6">
-        <h4>Amount</h4>
-        <hr />
-        <input class="form-control" type="number" min="0.00" max="10000.00" step="0.01" placeholder="200.00" align="middle"/>
-        <br/>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Amount</h4>
+            <hr />
+            <input class="form-control" type="number" min="0.00" max="10000.00" step="0.01" placeholder="200.00" align="middle" />
+            <br />
+        </div>
     </div>
-</div>
-<br/>
+    <br />
 
-<div class="row">
-    <div class="col-md-6">
-        <h4>Bill Notes</h4>
-        <hr />
-        <form>
-            <fieldset>
-                <p>
-                    <textarea class="form-control" rows="6" cols="80">Add a Note to Your Bill</textarea>
-                </p>
-            </fieldset>
-        </form>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Bill Notes</h4>
+            <hr />
+            <form>
+                <fieldset>
+                    <p>
+                        <textarea class="form-control" rows="6" cols="80">Add a Note to Your Bill</textarea>
+                    </p>
+                </fieldset>
+            </form>
+        </div>
     </div>
-</div>
 
-<br />
-<button type="submit" class="btn btn-default" onclick="billAlert()">Create Bill</button>
+    <br />
+    <button type="submit" class="btn btn-default" onclick="billAlert()">Create Bill</button>
 
-<script language="javascript" type="text/javascript">
+    <script language="javascript" type="text/javascript">
 
-    function billAlert() {
-        alert("Are you sure all information about this bill is correct?");
-        //location.href = '....';
+        function billAlert() {
+            alert("Are you sure all information about this bill is correct?");
+            //location.href = '....';
+        }
+
+    </script>
+
+    @section Scripts {
+        @await Html.PartialAsync("_ValidationScriptsPartial")
     }
-    
-</script>
-
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}
