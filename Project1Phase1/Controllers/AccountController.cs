@@ -61,11 +61,18 @@ namespace Project1Phase1.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                var user = await _userManager.FindByEmailAsync(model.Email);
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    if (await _userManager.IsEmailConfirmedAsync(user)) {
+                        return RedirectToAction("JoinCreateHousehold", "Home");
+                    }
+                    else
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -232,7 +239,7 @@ namespace Project1Phase1.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("JoinCreateHousehold", "Home");
                 }
                 AddErrors(result);
             }
