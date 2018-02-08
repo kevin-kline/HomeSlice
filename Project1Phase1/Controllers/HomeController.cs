@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Project1Phase1.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Project1Phase1.Controllers
 {
@@ -18,6 +19,7 @@ namespace Project1Phase1.Controllers
         {
             return View();
         }
+        ‎[Authorize(Roles = "HouseholdAdmin")]‎
         public IActionResult ManageHousehold()
         {
             return View();
