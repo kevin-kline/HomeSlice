@@ -14,6 +14,10 @@ namespace Project1Phase1.Controllers
         {
             return View();
         }
+        public IActionResult Home()
+        {
+            return View();
+        }
         public IActionResult JoinCreateHousehold()
         {
             return View();
