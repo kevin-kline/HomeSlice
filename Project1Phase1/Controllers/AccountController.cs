@@ -61,12 +61,14 @@ namespace Project1Phase1.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var user = await _userManager.FindByEmailAsync(model.Email);
+                
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    if (await _userManager.IsEmailConfirmedAsync(user)) {
+
+                    var user = await _userManager.FindByEmailAsync(model.Email);
+                    if (!await _userManager.IsEmailConfirmedAsync(user)) {
                         return RedirectToAction("JoinCreateHousehold", "Home");
                     }
                     else
