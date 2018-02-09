@@ -107,12 +107,12 @@ namespace Project1Phase1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SendVerificationEmail(IndexViewModel model)
+        public async Task<IActionResult> SendVerificationEmail(/*IndexViewModel model*/)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -125,8 +125,8 @@ namespace Project1Phase1.Controllers
             var email = user.Email;
             await _emailSender.SendEmailConfirmationAsync(email, callbackUrl);
 
-            StatusMessage = "Verification email sent. Please check your email.";
-            return RedirectToAction(nameof(Index));
+            ViewData["StatusMessage"] = "Verification email sent. Please check your email.";
+            return RedirectToAction("JoinCreateHousehold", "Home");
         }
 
         [HttpGet]

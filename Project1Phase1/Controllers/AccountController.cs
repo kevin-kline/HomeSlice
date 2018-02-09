@@ -73,7 +73,8 @@ namespace Project1Phase1.Controllers
                     }
                     else
                     {
-                        return RedirectToLocal(returnUrl);
+                        return RedirectToAction("Profile", "Home");
+                        //return RedirectToLocal(returnUrl);
                     }
                 }
                 if (result.RequiresTwoFactor)
@@ -344,7 +345,8 @@ namespace Project1Phase1.Controllers
         {
             if (userId == null || code == null)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                throw new ApplicationException($"The confirmation link is not valid");
+                //return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
@@ -352,7 +354,8 @@ namespace Project1Phase1.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            return RedirectToAction("Profile", "Home");
+            //return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
         [HttpGet]
