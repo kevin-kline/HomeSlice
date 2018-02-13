@@ -1,9 +1,180 @@
-﻿
-@{
-    ViewData["Title"] = "ManageBills";
+﻿@{
+    ViewData["Title"] = "Manage Bills";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<br/><br/>
-<img src="~/images/Manage Bills Page.jpg" />
-<br>
-<br>
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div>
+        <h4>Bills You Manage:</h4>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th align="center">Rent</th>
+            <td align="center">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#billDetailsModal"><span class="glyphicon glyphicon-comment"></span> Details</button><!--create box-->
+                <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#billEditModal"><span class="glyphicon glyphicon-list"></span> Edit</button>
+                <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#billDeleteModal"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-8">
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div>
+        <h4>Bills You Pay:</h4>
+    </div>
+</div>
+
+<table class="table table-striped" align="center">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>Roommate(s)</th>
+            <th>Amount</th>
+            <th>Frequency</th>
+            <th>Due Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Rent</th>
+            <td></td>
+            <td>Kevin</td>
+            <td>$20.00</td>
+            <td>Monthly</td>
+            <td>1st</td>
+        </tr>
+    </tbody>
+</table>
+
+<br />
+<br />
+
+<!-- Bill Details Modal -->
+<div class="modal fade" id="billDetailsModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Bill Details Modal Content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Bill Details</h4>
+            </div>
+            <div class="modal-body">
+                <p>Bill Type - <strong>Rent</strong></p>
+                <p>Roommate(s) on Bill - <strong>Tom, Mina, Will</strong></p>
+                <p>Bill Amount - <strong>$100.00</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bill Edit Modal -->
+<div class="modal fade" id="billEditModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Bill Edit Modal Content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Bill</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Bill Type</h4>
+                        <hr />
+                        <select class="form-control" id="AddBill" name="AddBill">
+                            <option>Select Bill Type</option>
+                            <option>Rent</option>
+                            <option>Strata Fees</option>
+                            <option>Hydro</option>
+                            <option>Cable/Internet</option>
+                            <option>Grocery</option>
+                            <option id="other">Other</option>
+                        </select>
+                        <br />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Roommate(s) On Bill</h4>
+                        <hr />
+                        <input id="RoommateA" type="checkbox" value="true" name="Kevin" />
+                        <label for="RoommateA">&nbsp;Kevin</label> <br />
+                        <input id="RoommateB" type="checkbox" value="true" name="Michael" />
+                        <label for="RoommateB">&nbsp;Michael</label> <br />
+                        <input id="RoommateC" type="checkbox" value="true" name="Mina" />
+                        <label for="RoommateC">&nbsp;Mina</label> <br />
+                        <input id="RoommateD" type="checkbox" value="true" name="Tom" />
+                        <label for="RoommateD">&nbsp;Tom</label> <br />
+                        <input id="RoommateE" type="checkbox" value="true" name="Will" />
+                        <label for="RoommateE">&nbsp;Will</label> <br />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>New Amount</h4>
+                        <hr />
+                        <input class="form-control" type="number" min="0.00" max="10000.00" step="0.01" placeholder="200.00" align="middle" />
+                        <br />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bill Delete Modal -->
+<div class="modal fade" id="billDeleteModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Bill Delete Modal Content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete Bill</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are You Sure You Want to Delete This Bill?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 <a asp-area="" asp-controller="Home" asp-action="Profile">Back to Profile</a>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
