@@ -11,11 +11,16 @@
 </div>
 <br />
 <div class="row">
-    <a asp-controller="Home" asp-action="Relationship" class="col-lg-4 text-center">See Relationship</a>
-    <a asp-controller="Home" asp-action="AddBill" class="col-lg-4 text-center">Add a Bill</a>
-    <a asp-controller="Home" asp-action="ManageBills" class="col-lg-4 text-center">Manage your Bills</a>
-</div>
-<a asp-controller="Home" asp-action="ManageHousehold" class="col-lg-4 text-center">Manage Household</a>
+    //Will: turns  footer options into a nav bar of sorts
+    <nav class="navbar navbar-dark bg-dark">
+        <!-- Navbar content -->
 
+        <a asp-controller="Home" asp-action="Relationship" class="col-lg-4 text-center">See Relationship</a>
+        <a asp-controller="Home" asp-action="AddBill" class="col-lg-4 text-center">Add a Bill</a>
+        <a asp-controller="Home" asp-action="ManageBills" class="col-lg-4 text-center">Manage your Bills</a>
+
+        <a asp-controller="Home" asp-action="ManageHousehold" class="col-lg-4 text-center">Manage Household</a>
+    </nav>
+</div>
 
 <br />
