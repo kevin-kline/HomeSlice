@@ -1,13 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Project1Phase1.Data.Migrations
+namespace Project1Phase1.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,20 +20,6 @@ namespace Project1Phase1.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                 });
 
             migrationBuilder.CreateTable(
@@ -65,11 +48,24 @@ namespace Project1Phase1.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Homes",
+                columns: table => new
+                {
+                    HomeId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    HomeName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Homes", x => x.HomeId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     RoleId = table.Column<string>(nullable: false)
@@ -90,7 +86,7 @@ namespace Project1Phase1.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
@@ -150,15 +146,111 @@ namespace Project1Phase1.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName");
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roommates",
+                columns: table => new
+                {
+                    RoommateId = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    HomeId = table.Column<int>(nullable: false),
+                    LastName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roommates", x => x.RoommateId);
+                    table.ForeignKey(
+                        name: "FK_Roommates_Homes_HomeId",
+                        column: x => x.HomeId,
+                        principalTable: "Homes",
+                        principalColumn: "HomeId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Roommates_AspNetUsers_RoommateId",
+                        column: x => x.RoommateId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    TransactionId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    AmountOfRoommates = table.Column<int>(nullable: false),
+                    DateTime = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    SenderId = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.TransactionId);
+                    table.ForeignKey(
+                        name: "FK_Transactions_Roommates_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "Roommates",
+                        principalColumn: "RoommateId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoommateTransactions",
+                columns: table => new
+                {
+                    TransactionId = table.Column<int>(nullable: false),
+                    ReceiverId = table.Column<string>(nullable: false),
+                    AmountToReceiver = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoommateTransactions", x => new { x.TransactionId, x.ReceiverId });
+                    table.UniqueConstraint("AK_RoommateTransactions_ReceiverId_TransactionId", x => new { x.ReceiverId, x.TransactionId });
+                    table.ForeignKey(
+                        name: "FK_RoommateTransactions_Roommates_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "Roommates",
+                        principalColumn: "RoommateId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RoommateTransactions_Transactions_TransactionId",
+                        column: x => x.TransactionId,
+                        principalTable: "Transactions",
+                        principalColumn: "TransactionId",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -176,11 +268,6 @@ namespace Project1Phase1.Data.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_UserId",
-                table: "AspNetUserRoles",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -190,6 +277,16 @@ namespace Project1Phase1.Data.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Roommates_HomeId",
+                table: "Roommates",
+                column: "HomeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_SenderId",
+                table: "Transactions",
+                column: "SenderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,7 +307,19 @@ namespace Project1Phase1.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "RoommateTransactions");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Transactions");
+
+            migrationBuilder.DropTable(
+                name: "Roommates");
+
+            migrationBuilder.DropTable(
+                name: "Homes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
