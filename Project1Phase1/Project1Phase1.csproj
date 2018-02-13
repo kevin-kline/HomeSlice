@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All" />
@@ -31,6 +32,10 @@
     <None Include="wwwroot\images\TeamPhotos\mina.jpg" />
     <None Include="wwwroot\images\TeamPhotos\tom.jpg" />
     <None Include="wwwroot\images\TeamPhotos\will.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\dist\" />
   </ItemGroup>
 
 </Project>
