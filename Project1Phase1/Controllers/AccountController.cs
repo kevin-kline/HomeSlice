@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using Project1Phase1.Models;
 using Project1Phase1.Models.AccountViewModels;
 using Project1Phase1.Services;
+using Project1Phase1.Repositories;
+using Project1Phase1.Data;
 
 namespace Project1Phase1.Controllers
 {
@@ -24,17 +26,20 @@ namespace Project1Phase1.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private ApplicationDbContext _context;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger, 
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _context = context;
         }
 
         [TempData]
@@ -234,6 +239,11 @@ namespace Project1Phase1.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+
+                    // *** If identity user created...then add the information needed to roomate.
+                    RoomieRepo roomieRepo = new RoomieRepo(_context);
+                    roomieRepo.AddRoommate(user.Id);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

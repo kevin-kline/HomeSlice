@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Project1Phase1.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,8 +51,7 @@ namespace Project1Phase1.Migrations
                 name: "Homes",
                 columns: table => new
                 {
-                    HomeId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    HomeId = table.Column<string>(nullable: false),
                     HomeName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -172,7 +171,7 @@ namespace Project1Phase1.Migrations
                 {
                     RoommateId = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
-                    HomeId = table.Column<int>(nullable: false),
+                    HomeId = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

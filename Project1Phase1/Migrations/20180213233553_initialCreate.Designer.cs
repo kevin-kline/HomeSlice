@@ -11,8 +11,8 @@ using System;
 namespace Project1Phase1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180213212329_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20180213233553_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,7 +129,7 @@ namespace Project1Phase1.Migrations
 
             modelBuilder.Entity("Project1Phase1.Data.Home", b =>
                 {
-                    b.Property<int>("HomeId")
+                    b.Property<string>("HomeId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("HomeName");
@@ -145,7 +145,7 @@ namespace Project1Phase1.Migrations
 
                     b.Property<string>("FirstName");
 
-                    b.Property<int>("HomeId");
+                    b.Property<string>("HomeId");
 
                     b.Property<string>("LastName");
 

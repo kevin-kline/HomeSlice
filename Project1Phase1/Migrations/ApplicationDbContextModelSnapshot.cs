@@ -128,7 +128,7 @@ namespace Project1Phase1.Migrations
 
             modelBuilder.Entity("Project1Phase1.Data.Home", b =>
                 {
-                    b.Property<int>("HomeId")
+                    b.Property<string>("HomeId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("HomeName");
@@ -144,7 +144,7 @@ namespace Project1Phase1.Migrations
 
                     b.Property<string>("FirstName");
 
-                    b.Property<int>("HomeId");
+                    b.Property<string>("HomeId");
 
                     b.Property<string>("LastName");
 

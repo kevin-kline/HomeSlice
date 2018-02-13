@@ -16,8 +16,7 @@ namespace Project1Phase1.Data
         public string RoommateId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
-        public int HomeId { get; set; }
+        public string HomeId { get; set; }
 
 
         //Navigation Properties
@@ -30,8 +29,7 @@ namespace Project1Phase1.Data
     public class Home
     {
         [Key]
-
-        public int HomeId { get; set; }
+        public string HomeId { get; set; }
         public string HomeName { get; set; }
 
         //Navigation Properties
@@ -94,6 +92,11 @@ namespace Project1Phase1.Data
                 .WithMany(r => r.Roommates)
                 .HasForeignKey(fk => new { fk.HomeId })
                 .OnDelete(DeleteBehavior.Restrict);
+
+            //builder.Entity<Roommate>()
+            //    .WithMany(r => r.Roommates)
+            //    .HasForeignKey(fk => new { fk.HomeId })
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Transaction>()
                 .HasOne(t => t.Roommate)
