@@ -13,10 +13,10 @@ namespace Project1Phase1.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
 
-        public class User
+        public class Roommate
         {
             [Key]
-            public int UserId { get; set; }
+            public int RoommateId { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
 
@@ -25,7 +25,9 @@ namespace Project1Phase1.Data
             
             //Navigation Properties
             public virtual Home Home { get; set; }
-            public virtual Transaction Transaction { get; set; }
+            public virtual ICollection<Transaction> Transactions { get; set; }
+            public virtual ICollection<RoommateTransaction> RoommateTransactions { get; set; }
+            public virtual ApplicationUser ApplicationUser { get; set; }
             
         }
         public class Home
@@ -36,7 +38,7 @@ namespace Project1Phase1.Data
             public string HomeName { get; set; }
 
             //Navigation Properties
-            public virtual User User { get; set; }
+            public virtual ICollection<Roommate> Roommates { get; set; }
         }
         public class Transaction
         {
@@ -45,15 +47,15 @@ namespace Project1Phase1.Data
             public string Name { get; set; }
             public string Type { get; set; }
             public DateTime DateTime { get; set; }
-            public int AmountOfUsers { get; set; }
+            public int AmountOfRoommates { get; set; }
           
             public int SenderId { get; set; }
 
             //navigation Properties
-            public virtual User User { get; set; }
-            public virtual UserTransaction UserTransaction { get; set; }
+            public virtual Roommate Roommate { get; set; }
+            public virtual ICollection<RoommateTransaction> RoommateTransactions { get; set; }
         }
-        public class UserTransaction
+        public class RoommateTransaction
         {
             [Key, Column(Order = 0)]
             
@@ -64,7 +66,7 @@ namespace Project1Phase1.Data
             public decimal AmountToReceiver { get; set; }
 
             //Navigation Properties
-            public virtual User User { get; set; }
+            public virtual Roommate Roommate { get; set; }
             public virtual Transaction Transaction { get; set; }
         }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -75,10 +77,11 @@ namespace Project1Phase1.Data
 
         //define entity collections
 
-            public DbSet<User>  Users { get; set; }
+            public DbSet<Roommate>  Roommates { get; set; }
             public DbSet<Transaction> Transactions { get; set; }
-            public DbSet<UserTransaction> UserTransactions { get; set; }
+            public DbSet<RoommateTransaction> RoommateTransactions { get; set; }
             public DbSet<Home> Homes { get; set; }
+            public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -86,12 +89,36 @@ namespace Project1Phase1.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
-            builder.Entity<ApplicationUser>();
+            
 
+            builder.Entity<RoommateTransaction>()
+                .HasKey(ut => new { ut.TransactionId, ut.ReceiverId });
 
+            builder.Entity<Roommate>()
+                .HasOne(r => r.Home)
+                .WithMany(r => r.Roommates)
+                .HasForeignKey(fk => new { fk.HomeId })
+                .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Transaction>()
+                .HasOne(t => t.Roommate)
+                .WithMany(t => t.Transactions)
+                .HasForeignKey(fk => new { fk.SenderId })
+                .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<RoommateTransaction>()
+                .HasOne(rt => rt.Roommate)
+                .WithMany(rt => rt.RoommateTransactions)
+                .HasForeignKey(fk => new { fk.ReceiverId })
+                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<RoommateTransaction>()
+                .HasOne(rt => rt.Transaction)
+                .WithMany(rt => rt.RoommateTransactions)
+                .HasForeignKey(fk => new { fk.TransactionId })
+                 .OnDelete(DeleteBehavior.Restrict);
+
+            //link roommate table to identity table
         }
     }
 }
