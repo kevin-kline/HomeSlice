@@ -61,7 +61,7 @@ namespace Project1Phase1.Repositories
         {
             // Create roles if none exist. 
             // This is a simple way to do it but it would be better to use a seeder. 
-            string[] roleNames = { "HouseholdAdmin", "HouseholdUser" };
+            string[] roleNames = { "AppAdmin", "HomeAdmin", "Roommate" };
             foreach (var roleName in roleNames)
             {
                 var created = CreateRole(roleName);
