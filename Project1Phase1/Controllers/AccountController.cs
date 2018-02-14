@@ -364,6 +364,10 @@ namespace Project1Phase1.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
             var result = await _userManager.ConfirmEmailAsync(user, code);
+
+            //need to sign in the user before redirecting to next page
+            await _signInManager.SignInAsync(user, isPersistent: false);
+
             return RedirectToAction("Profile", "Home");
             //return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
