@@ -230,6 +230,7 @@ namespace Project1Phase1.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        // ZZZ Change RegisterViewModel to also include 'FirstName', 'LastName'.
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -237,12 +238,17 @@ namespace Project1Phase1.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
+
+                // *** By now the identity user has just been creaated so 'user' has an id.
                 if (result.Succeeded)
                 {
 
                     // *** If identity user created...then add the information needed to roomate.
+
+
                     RoomieRepo roomieRepo = new RoomieRepo(_context);
-                    roomieRepo.AddRoommate(user.Id);
+                    // ZZZ Change AddRoomate() to include 'FirstName' and 'LastName' parameters.
+                    roomieRepo.AddRoommate(user.Id, model.firstName, model.lastName);
 
                     _logger.LogInformation("User created a new account with password.");
 
