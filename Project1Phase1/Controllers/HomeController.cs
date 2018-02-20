@@ -6,11 +6,22 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Project1Phase1.Models;
 using Microsoft.AspNetCore.Authorization;
+using Project1Phase1.Repositories;
+using Project1Phase1.Services;
+using Project1Phase1.Data;
 
 namespace Project1Phase1.Controllers
 {
     public class HomeController : Controller
     {
+
+        ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -30,6 +41,9 @@ namespace Project1Phase1.Controllers
         }
         public IActionResult Profile()
         {
+            string userId = User.getUserId();
+            TransactionRepo repo = new TransactionRepo(_context);
+            decimal totalBalance = repo.GetTotalBalance(userId);
             return View();
         }
         public IActionResult Relationship()
