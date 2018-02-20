@@ -21,5 +21,13 @@ namespace Project1Phase1.Repositories
             _context.Roommates.Add(r1);
             _context.SaveChanges();
         }
+
+        public Roommate GetRoommate(string appUserId)
+        {
+            return _context.Roommates.Where(r => r.RoommateId == appUserId)
+                .FirstOrDefault();
+        }
+        
+
     }
 }
