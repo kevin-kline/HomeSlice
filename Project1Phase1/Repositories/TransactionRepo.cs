@@ -20,9 +20,9 @@ namespace Project1Phase1.Repositories
         {
             decimal bal = 0;
             //adding all the payments from the roommates to the current user to the balance
-            IEnumerable<RoommateTransaction> roomieTransactions = _context.RoommateTransactions
+            IEnumerable<RoommateTransaction> transReceived = _context.RoommateTransactions
                 .Where(i => i.ReceiverId == userId);
-            foreach (var trans in roomieTransactions)
+            foreach (var trans in transReceived)
             {
                 decimal transBalance = trans.AmountToReceiver;
                 bal += transBalance;
@@ -32,12 +32,40 @@ namespace Project1Phase1.Repositories
                 .Where(t => t.SenderId == userId);
             foreach (var transaction in transactions)
             {
-                IEnumerable<RoommateTransaction> bills = transaction.RoommateTransactions;
-                foreach (var trans in bills)
+                IEnumerable<RoommateTransaction> transSent = transaction.RoommateTransactions;
+                foreach (var trans in transSent)
                 {
                     decimal billBalance = trans.AmountToReceiver;
                     bal += billBalance;
                 }
+            }
+            return bal;
+        }
+
+        public decimal GetIndividualRelationshipBalance(string userId, string roommateId)
+        {
+            decimal bal = 0;
+            //adding all the transactions from the roommate to the current user to the balance
+            IEnumerable<RoommateTransaction> transReceived = _context.RoommateTransactions
+                .Where(i => i.ReceiverId == userId)
+                .Where(i => i.Transaction.SenderId == roommateId);
+            foreach (var trans in transReceived)
+            {
+                decimal transBalance = trans.AmountToReceiver;
+                bal += transBalance; //Kevin, for this particular one we need one of them to be -=
+                                     //because we are querying the RoommateTransactions twice,
+                                     //not the RoommateTransaction table and the Transaction table.
+                                     //Hear me out. I realize I may be crazy, but not in this case
+                                     //(I think).
+            }
+            //adding all the transactions from the current user to the roommate to the balance
+            IEnumerable<RoommateTransaction> transactionsSent = _context.RoommateTransactions
+                .Where(i => i.ReceiverId == roommateId)
+                .Where(i => i.Transaction.SenderId == userId);
+            foreach (var trans in transactionsSent)
+            {
+                decimal transBalance = trans.AmountToReceiver;
+                bal -= transBalance;
             }
             return bal;
         }

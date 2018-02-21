@@ -41,10 +41,19 @@ namespace Project1Phase1.Controllers
         }
         public IActionResult Profile()
         {
+            //get current users total balance
             string userId = User.getUserId();
-            TransactionRepo repo = new TransactionRepo(_context);
-            decimal totalBalance = repo.GetTotalBalance(userId);
-            return View();
+            TransactionRepo TransRepo = new TransactionRepo(_context);
+            decimal totalBalance = TransRepo.GetTotalBalance(userId);
+            //get all other roommates
+            RoomieRepo roomieRepo = new RoomieRepo(_context);
+            IEnumerable<Roommate> roommates = roomieRepo
+                .GetAllOtherRoommates(userId);
+            //get all other balances with roomies 
+
+            //create VM for profile with all the above info
+
+            return View(/* insert VM here */);
         }
         public IActionResult Relationship()
         {
