@@ -33,7 +33,7 @@ namespace Project1Phase1.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            return RedirectToAction(nameof(HomeController.Index), "JoinCreateHousehold");
+            return RedirectToAction(nameof(HomeController.JoinCreateHousehold), "JoinCreateHousehold");
         }
 
         //public IActionResult Invite(string householdName, string email)

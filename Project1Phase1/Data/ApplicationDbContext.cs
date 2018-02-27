@@ -28,7 +28,6 @@ namespace Project1Phase1.Data
     }
     public class Home
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public string HomeId { get; set; }
         public string HomeName { get; set; }
