@@ -30,14 +30,17 @@ namespace Project1Phase1.Repositories
 
         public IEnumerable<Roommate> GetAllOtherRoommates(string userId)
         {
-            Roommate currentUser = _context.Roommates
-                .Where(r => r.RoommateId == userId).FirstOrDefault();
-            IEnumerable<Roommate> housemates = _context.Roommates
-                .Where(h => h.HomeId == currentUser.HomeId)
-                .Where(h => h.RoommateId != userId);
-            return housemates;
+                Roommate currentUser = _context.Roommates
+                    .Where(r => r.RoommateId == userId).FirstOrDefault();
+            if (currentUser.HomeId != null)
+            {
+                IEnumerable<Roommate> housemates = _context.Roommates
+                    .Where(h => h.HomeId == currentUser.HomeId)
+                    .Where(h => h.RoommateId != userId);
+                return housemates;
+            }
+            return null;
         }
-        
 
     }
 }
