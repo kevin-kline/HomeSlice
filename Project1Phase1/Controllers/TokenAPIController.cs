@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Project1Phase1.Models;
 using Project1Phase1.Models.AccountViewModels;
+using Project1Phase1.Data;
 
 namespace Project1Phase1.Controllers
 {
@@ -24,17 +25,20 @@ namespace Project1Phase1.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
+        ApplicationDbContext _context;
 
         // Constructor.
         public TokenAPI(
                 UserManager<ApplicationUser> userManager,
                 SignInManager<ApplicationUser> signInManager,
-                IConfiguration configuration
+                IConfiguration configuration,
+                ApplicationDbContext context
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _context = context;
         }
 
         // Generates a fake collection for demonstration purposes. 
@@ -59,6 +63,13 @@ namespace Project1Phase1.Controllers
         public IEnumerable<LoginViewModel> Public()
         {
             return GetFakeData();
+        }
+
+        [HttpGet]
+        public string NumberOfUsers()
+        {
+            int numOfUsers = _context.Roommates.Count();
+            return "We have " + numOfUsers + " users!";
         }
 
         // This Action method requires authentication.
