@@ -45,13 +45,13 @@
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="ManageHousehold">Manage Household</a></li>
                     }
-                    @*@if (User.IsInRole("AppAdmin")) 
-                    {*@
+                    @if (User.IsInRole("AppAdmin")) 
+                    {
                      <li><a asp-area="" asp-controller="Role" asp-action="Index">Roles</a></li>
 
                   <li><a asp-area="" asp-controller="UserRole" asp-action="Index">User Roles</a></li>
                     }
-                   @*  *@
+                     
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="JoinCreateHousehold">Join/Create Household</a></li>-->
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="ManageHousehold">Manage Household</a></li>-->
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="Relationship">Relationship</a></li>-->
