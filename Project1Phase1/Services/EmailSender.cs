@@ -43,7 +43,7 @@ namespace Project1Phase1.Services
                 = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
 
                 System.Net.NetworkCredential credentials
-                = new System.Net.NetworkCredential("mina.thr", "Ramtin321");
+                = new System.Net.NetworkCredential("kevin-kline", "S3ndGr1d");
 
                 smtpClient.Credentials = credentials;
                 smtpClient.Send(mailMsg);

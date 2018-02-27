@@ -35,11 +35,12 @@ namespace Project1Phase1.Controllers
         {
             return View();
         }
-         [Authorize(Roles = "HouseholdAdmin")] 
+         [Authorize(Roles = "HomeAdmin")] 
         public IActionResult ManageHousehold()
         {
             return View();
         }
+        [Authorize]
         public IActionResult Profile()
         {
             //get current users total balance
@@ -56,7 +57,7 @@ namespace Project1Phase1.Controllers
             RoomieAndBalance currentUser = new RoomieAndBalance()
             {
                 Balance = totalBalance,
-                RoommateName = currentSignedInUser.FirstName
+                Roommate = currentSignedInUser
             };
             ProfilePageVM ppvm = new ProfilePageVM()
             {
@@ -65,14 +66,14 @@ namespace Project1Phase1.Controllers
             };
             //get all other balances with roomies, put them into a VM,
             //which then goes into another bigger VM
-            if (roommates.Count() != 0) {
+            if (roommates != null) {
                 foreach (var roomie in roommates)
                 {
                     decimal relationshipBalance =
                         TransRepo.GetIndividualRelationshipBalance(userId, roomie.RoommateId);
                     RoomieAndBalance roomieAndBalance = new RoomieAndBalance()
                     {
-                        RoommateName = roomie.FirstName,
+                        Roommate = roomie,
                         Balance = relationshipBalance
                     };
                     ppvm.RoomiesRelationships.Add(roomieAndBalance);
