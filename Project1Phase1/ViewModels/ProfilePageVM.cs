@@ -7,7 +7,7 @@ namespace Project1Phase1.ViewModels
 {
     public class RoomieAndBalance
     {
-        public string RoommateId { get; set; }
+        public string RoommateName { get; set; }
         public decimal Balance { get; set; }
     }
     public class ProfilePageVM

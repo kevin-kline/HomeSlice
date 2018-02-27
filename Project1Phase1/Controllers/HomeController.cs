@@ -50,11 +50,13 @@ namespace Project1Phase1.Controllers
             RoomieRepo roomieRepo = new RoomieRepo(_context);
             IEnumerable<Roommate> roommates = roomieRepo
                 .GetAllOtherRoommates(userId);
-            //create VMs
+            //create and fill VMs
+                //get current user name
+            Roommate currentSignedInUser = roomieRepo.GetRoommate(userId);
             RoomieAndBalance currentUser = new RoomieAndBalance()
             {
                 Balance = totalBalance,
-                RoommateId = userId
+                RoommateName = currentSignedInUser.FirstName
             };
             ProfilePageVM ppvm = new ProfilePageVM()
             {
@@ -68,7 +70,7 @@ namespace Project1Phase1.Controllers
                     TransRepo.GetIndividualRelationshipBalance(userId, roomie.RoommateId);
                 RoomieAndBalance roomieAndBalance = new RoomieAndBalance()
                 {
-                    RoommateId = roomie.RoommateId,
+                    RoommateName = roomie.FirstName,
                     Balance = relationshipBalance
                 };
                 ppvm.RoomiesRelationships.Add(roomieAndBalance);
@@ -77,6 +79,8 @@ namespace Project1Phase1.Controllers
         }
         public IActionResult Relationship()
         {
+
+
             return View();
         }
         public IActionResult AddBill()
