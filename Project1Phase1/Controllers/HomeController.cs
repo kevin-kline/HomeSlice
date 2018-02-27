@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Project1Phase1.Repositories;
 using Project1Phase1.Services;
 using Project1Phase1.Data;
+using Project1Phase1.ViewModels;
 
 namespace Project1Phase1.Controllers
 {
@@ -49,14 +50,40 @@ namespace Project1Phase1.Controllers
             RoomieRepo roomieRepo = new RoomieRepo(_context);
             IEnumerable<Roommate> roommates = roomieRepo
                 .GetAllOtherRoommates(userId);
-            //get all other balances with roomies 
-
-            //create VM for profile with all the above info
-
-            return View(/* insert VM here */);
+            //create and fill VMs
+                //get current user name
+            Roommate currentSignedInUser = roomieRepo.GetRoommate(userId);
+            RoomieAndBalance currentUser = new RoomieAndBalance()
+            {
+                Balance = totalBalance,
+                RoommateName = currentSignedInUser.FirstName
+            };
+            ProfilePageVM ppvm = new ProfilePageVM()
+            {
+                CurrentUser = currentUser,
+                RoomiesRelationships = new List<RoomieAndBalance>()
+            };
+            //get all other balances with roomies, put them into a VM,
+            //which then goes into another bigger VM
+            if (roommates.Count() != 0) {
+                foreach (var roomie in roommates)
+                {
+                    decimal relationshipBalance =
+                        TransRepo.GetIndividualRelationshipBalance(userId, roomie.RoommateId);
+                    RoomieAndBalance roomieAndBalance = new RoomieAndBalance()
+                    {
+                        RoommateName = roomie.FirstName,
+                        Balance = relationshipBalance
+                    };
+                    ppvm.RoomiesRelationships.Add(roomieAndBalance);
+                }
+            }
+            return View(ppvm);
         }
         public IActionResult Relationship()
         {
+
+
             return View();
         }
         public IActionResult AddBill()
