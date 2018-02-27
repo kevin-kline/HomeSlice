@@ -50,33 +50,40 @@ namespace Project1Phase1.Controllers
             RoomieRepo roomieRepo = new RoomieRepo(_context);
             IEnumerable<Roommate> roommates = roomieRepo
                 .GetAllOtherRoommates(userId);
-            //create VMs
+            //create and fill VMs
+                //get current user name
+            Roommate currentSignedInUser = roomieRepo.GetRoommate(userId);
             RoomieAndBalance currentUser = new RoomieAndBalance()
             {
                 Balance = totalBalance,
-                RoommateId = userId
+                RoommateName = currentSignedInUser.FirstName
             };
             ProfilePageVM ppvm = new ProfilePageVM()
             {
-                CurrentUser = currentUser
+                CurrentUser = currentUser,
+                RoomiesRelationships = new List<RoomieAndBalance>()
             };
             //get all other balances with roomies, put them into a VM,
             //which then goes into another bigger VM
-            foreach (var roomie in roommates)
-            {
-                decimal relationshipBalance =
-                    TransRepo.GetIndividualRelationshipBalance(userId, roomie.RoommateId);
-                RoomieAndBalance roomieAndBalance = new RoomieAndBalance()
+            if (roommates.Count() != 0) {
+                foreach (var roomie in roommates)
                 {
-                    RoommateId = roomie.RoommateId,
-                    Balance = relationshipBalance
-                };
-                ppvm.RoomiesRelationships.Add(roomieAndBalance);
+                    decimal relationshipBalance =
+                        TransRepo.GetIndividualRelationshipBalance(userId, roomie.RoommateId);
+                    RoomieAndBalance roomieAndBalance = new RoomieAndBalance()
+                    {
+                        RoommateName = roomie.FirstName,
+                        Balance = relationshipBalance
+                    };
+                    ppvm.RoomiesRelationships.Add(roomieAndBalance);
+                }
             }
             return View(ppvm);
         }
         public IActionResult Relationship()
         {
+
+
             return View();
         }
         public IActionResult AddBill()

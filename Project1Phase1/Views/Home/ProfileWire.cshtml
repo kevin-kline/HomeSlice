@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Personal Summary Page</h2>
+@if (User.IsInRole("HomeAdmin"))
+{
+    <div class="row">
+        <a asp-area="" asp-controller="Home" asp-action="ManageHousehold">Manage Household</a>
+    </div>
+}
+
+<div class="row">
+    <table>
+        <colgroup>
+            <col style="width:25%">
+            <col style="width:50%">
+            <col style="width:25%">
+        </colgroup>
+        <tbody style="text-align: center">
+            <tr class="bg-success">
+                <td><img src="~/images/profile-pictures.png" width="300" class="img-rounded" /></td>
+                <td><strong>//HOUSEHOLD// OWES YOU</strong></td>
+                <td>$100.00</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<br />
+
+<h2>ROOMMATES</h2>
+<div class="row">
+    <table>
+        <colgroup>
+            <col style="width:25%">
+            <col style="width:50%">
+            <col style="width:25%">
+        </colgroup>
+        <tbody style="text-align: center">
+            <tr class="bg-success">
+                <td><img src="~/images/profile-pictures.png" width="200" class="img-rounded" /></td>
+                <td><strong>//USER// OWES YOU</strong></td>
+                <td>$200.00</td>
+            </tr>
+            <tr class="bg-danger">
+                <td><img src="~/images/profile-pictures.png" width="200" class="img-rounded" /></td>
+                <td><strong>//USER// YOU OWE</strong></td>
+                <td>$100.00</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+@*<div class="row">
+        <div class="col-lg-2"></div>
+        <img class="col-lg-8" src="~/images/Profile3.jpg" />
+        <div class="col-lg-2"></div>
+    </div>*@
+<br />
+<div class="row">
+    @*Will: turns  footer options into a nav bar of sorts*@
+    <nav class="navbar navbar-dark bg-dark">
+        <!-- Navbar content -->
+
+        <a asp-controller="Home" asp-action="Relationship" class="col-lg-4 text-center">See Relationship</a>
+        <a asp-controller="Home" asp-action="AddBill" class="col-lg-4 text-center">Add a Bill</a>
+        <a asp-controller="Home" asp-action="ManageBills" class="col-lg-4 text-center">Manage your Bills</a>
+        <a asp-controller="Home" asp-action="ManageHousehold" class="col-lg-4 text-center">Manage Household</a>
+    </nav>
+</div>
+
+<br />
