@@ -9,8 +9,8 @@ namespace Project1Phase1.ViewModels
     public class HomeVM
     {
         [DisplayName("Home ID")]
-        public string id { get; set; }
+        public Guid Id { get; set; }
         [DisplayName("Home Name")]
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 }
