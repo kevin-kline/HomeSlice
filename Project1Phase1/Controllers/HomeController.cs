@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Project1Phase1.Repositories;
 using Project1Phase1.Services;
 using Project1Phase1.Data;
+using Project1Phase1.ViewModels;
 
 namespace Project1Phase1.Controllers
 {
@@ -49,11 +50,30 @@ namespace Project1Phase1.Controllers
             RoomieRepo roomieRepo = new RoomieRepo(_context);
             IEnumerable<Roommate> roommates = roomieRepo
                 .GetAllOtherRoommates(userId);
-            //get all other balances with roomies 
-
-            //create VM for profile with all the above info
-
-            return View(/* insert VM here */);
+            //create VMs
+            RoomieAndBalance currentUser = new RoomieAndBalance()
+            {
+                Balance = totalBalance,
+                RoommateId = userId
+            };
+            ProfilePageVM ppvm = new ProfilePageVM()
+            {
+                CurrentUser = currentUser
+            };
+            //get all other balances with roomies, put them into a VM,
+            //which then goes into another bigger VM
+            foreach (var roomie in roommates)
+            {
+                decimal relationshipBalance =
+                    TransRepo.GetIndividualRelationshipBalance(userId, roomie.RoommateId);
+                RoomieAndBalance roomieAndBalance = new RoomieAndBalance()
+                {
+                    RoommateId = roomie.RoommateId,
+                    Balance = relationshipBalance
+                };
+                ppvm.RoomiesRelationships.Add(roomieAndBalance);
+            }
+            return View(ppvm);
         }
         public IActionResult Relationship()
         {
