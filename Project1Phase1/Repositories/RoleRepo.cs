@@ -51,7 +51,7 @@ namespace Project1Phase1.Repositories
             {
                 Name = roleName,
                 Id = roleName,
-                NormalizedName = roleName.ToLower()
+                NormalizedName = roleName.ToUpper()
             });
             _context.SaveChanges();
             return true;

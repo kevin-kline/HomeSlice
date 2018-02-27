@@ -35,17 +35,23 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <!-- <li><a asp-area="" asp-controller="Home" asp-action="JoinCreateHousehold">Join/Create Household</a></li>
                      <li><a asp-area="" asp-controller="Home" asp-action="ManageHousehold">Manage Household</a></li>-->
+                    
                     <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profile</a></li>
                     
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="Relationship">Relationship</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="AddBill">Add Bill</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="ManageBills">Manage Bills</a></li>-->
-                    @if (User.IsInRole("HouseholdAdmin"))
+                    @if (User.IsInRole("HomeAdmin"))
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="ManageHousehold">Manage Household</a></li>
                     }
-                    <li><a asp-area="" asp-controller="Role" asp-action="Index">Roles</a></li>
-                    <li><a asp-area="" asp-controller="UserRole" asp-action="Index">User Roles</a></li>
+                    @*@if (User.IsInRole("AppAdmin")) 
+                    {*@
+                     <li><a asp-area="" asp-controller="Role" asp-action="Index">Roles</a></li>
+
+                  <li><a asp-area="" asp-controller="UserRole" asp-action="Index">User Roles</a></li>
+                    }
+                   @*  *@
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="JoinCreateHousehold">Join/Create Household</a></li>-->
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="ManageHousehold">Manage Household</a></li>-->
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="Relationship">Relationship</a></li>-->
