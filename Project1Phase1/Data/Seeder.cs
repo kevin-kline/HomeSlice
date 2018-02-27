@@ -31,11 +31,11 @@ namespace Project1Phase1.Data
 
             //Add Roommates
             Roommate r1 = new Roommate { RoommateId = "1", FirstName = "Kevin", HomeId = h1.HomeId, LastName = "Kline"  };
-            _context.Roommates.Add(r1);
+            //_context.Roommates.Add(r1);
             Roommate r2 = new Roommate { RoommateId = "2", FirstName = "Tom", HomeId = h1.HomeId, LastName = "Setterlund" };
-            _context.Roommates.Add(r2);
+            //_context.Roommates.Add(r2);
             Roommate r3 = new Roommate { RoommateId = "3", FirstName = "Michael", HomeId = h1.HomeId, LastName = "Van Zande" };
-            _context.Roommates.Add(r3);
+            //_context.Roommates.Add(r3);
 
             _context.SaveChanges();
 

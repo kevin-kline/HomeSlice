@@ -66,13 +66,29 @@ namespace Project1Phase1.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                
+
+                //2s delay
+                System.Threading.Thread.Sleep(2000);
+                // Require the user to have a confirmed email before they can log on.
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    if (!await _userManager.IsEmailConfirmedAsync(user))
+                    {
+                        ModelState.AddModelError(string.Empty,
+                                      "You must have a confirmed email to log in.");
+                        return View(model);
+                    }
+                }
+
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
 
-                    var user = await _userManager.FindByEmailAsync(model.Email);
+                    //var user = await _userManager.FindByEmailAsync(model.Email);
+
+                    //we need another condition here which checks if the user has a household or not
                     if (!await _userManager.IsEmailConfirmedAsync(user)) {
                         return RedirectToAction("JoinCreateHousehold", "Home");
                     }
@@ -252,13 +268,16 @@ namespace Project1Phase1.Controllers
 
                     _logger.LogInformation("User created a new account with password.");
 
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    //await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation("User created a new account with password.");
-                    return RedirectToAction("JoinCreateHousehold", "Home");
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    //_logger.LogInformation("User created a new account with password.");
+                    //return RedirectToAction("JoinCreateHousehold", "Home");
+
+                    ModelState.AddModelError(string.Empty, "please complete your registration using the link that has been sent to your email.");
+                    return View(model);
                 }
                 AddErrors(result);
             }
