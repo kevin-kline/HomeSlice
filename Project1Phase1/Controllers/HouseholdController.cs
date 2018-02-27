@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Project1Phase1.Services;
 using Project1Phase1.Data;
 using Project1Phase1.Repositories;
+using Project1Phase1.ViewModels;
 
 namespace Project1Phase1.Controllers
 {
@@ -25,7 +26,7 @@ namespace Project1Phase1.Controllers
             return View();
         }
 
-        public IActionResult Create(string name, string address)
+        public IActionResult Create(HomeVM name)
         {
             HouseholdRepo householdRepo = new HouseholdRepo(_context);
             if (householdRepo.CreateHousehold(name))

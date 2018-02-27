@@ -17,16 +17,16 @@ namespace Project1Phase1.Repositories
             this._context = context;
         }
 
-        public bool CreateHousehold(string name)
+        public bool CreateHousehold(HomeVM home)
         {
-            var household = GetHouseholdByName(name);
+            var household = GetHouseholdByName(home.Name);
             if (household != null)
             {
                 return false;
             }
             _context.Homes.Add(new Home
             {
-                HomeName = name
+                HomeName = home.Name
             });
             _context.SaveChanges();
             return true;
@@ -44,7 +44,7 @@ namespace Project1Phase1.Repositories
             return false;
         }
 
-        public Home GetHouseholdById(string Id)
+        public Home GetHouseholdById(int Id)
         {
             var household = _context.Homes.Where(h => h.HomeId == Id).FirstOrDefault();
             if (household != null)
