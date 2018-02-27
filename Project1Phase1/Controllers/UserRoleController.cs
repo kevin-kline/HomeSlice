@@ -7,6 +7,7 @@ using Project1Phase1.Repositories;
 using Project1Phase1.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Project1Phase1.Data;
+using Project1Phase1.Models.AccountViewModels;
 
 namespace Project1Phase1.Controllers
 {
