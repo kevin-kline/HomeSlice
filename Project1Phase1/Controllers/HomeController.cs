@@ -35,7 +35,7 @@ namespace Project1Phase1.Controllers
         {
             return View();
         }
-         [Authorize(Roles = "HouseholdAdmin")] 
+         [Authorize(Roles = "HomeAdmin")] 
         public IActionResult ManageHousehold()
         {
             return View();

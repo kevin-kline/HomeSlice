@@ -17,16 +17,19 @@ namespace Project1Phase1.Repositories
             this._context = context;
         }
 
-        public bool CreateHousehold(string name)
+        public bool CreateHousehold(HomeVM home)
         {
-            var household = GetHouseholdByName(name);
+            var household = GetHouseholdByName(home.homeName);
             if (household != null)
             {
                 return false;
             }
+
+            var g = Guid.NewGuid().ToString();
             _context.Homes.Add(new Home
             {
-                HomeName = name
+                HomeId = g,
+                HomeName = home.homeName
             });
             _context.SaveChanges();
             return true;
