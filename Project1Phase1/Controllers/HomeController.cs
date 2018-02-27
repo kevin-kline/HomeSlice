@@ -40,6 +40,7 @@ namespace Project1Phase1.Controllers
         {
             return View();
         }
+        [Authorize]
         public IActionResult Profile()
         {
             //get current users total balance
@@ -56,7 +57,7 @@ namespace Project1Phase1.Controllers
             RoomieAndBalance currentUser = new RoomieAndBalance()
             {
                 Balance = totalBalance,
-                RoommateName = currentSignedInUser
+                Roommate = currentSignedInUser
             };
             ProfilePageVM ppvm = new ProfilePageVM()
             {
@@ -72,7 +73,7 @@ namespace Project1Phase1.Controllers
                         TransRepo.GetIndividualRelationshipBalance(userId, roomie.RoommateId);
                     RoomieAndBalance roomieAndBalance = new RoomieAndBalance()
                     {
-                        RoommateName = roomie,
+                        Roommate = roomie,
                         Balance = relationshipBalance
                     };
                     ppvm.RoomiesRelationships.Add(roomieAndBalance);
