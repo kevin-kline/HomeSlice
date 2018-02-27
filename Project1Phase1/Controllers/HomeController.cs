@@ -73,7 +73,7 @@ namespace Project1Phase1.Controllers
                     RoommateName = roomie.FirstName,
                     Balance = relationshipBalance
                 };
-                ppvm.RoomiesRelationships.Add(roomieAndBalance);
+                //ppvm.RoomiesRelationships.Add(roomieAndBalance);
             }
             return View(ppvm);
         }

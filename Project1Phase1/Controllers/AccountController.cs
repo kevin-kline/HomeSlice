@@ -272,9 +272,11 @@ namespace Project1Phase1.Controllers
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    // ***********comment out the following line to disable auto sign in upon registration
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     //_logger.LogInformation("User created a new account with password.");
-                    //return RedirectToAction("JoinCreateHousehold", "Home");
+                    // ***********
+                    return RedirectToAction("JoinCreateHousehold", "Home");
 
                     ModelState.AddModelError(string.Empty, "please complete your registration using the link that has been sent to your email.");
                     return View(model);
