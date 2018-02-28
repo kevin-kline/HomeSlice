@@ -31,7 +31,8 @@ namespace Project1Phase1.Controllers
             HouseholdRepo householdRepo = new HouseholdRepo(_context);
             if (householdRepo.CreateHousehold(home))
             {
-                return RedirectToAction("Join", home);
+                var _home = householdRepo.GetHouseholdByName(home.homeName);
+                return RedirectToAction("Join", _home);
             }
             return RedirectToAction(nameof(HomeController.JoinCreateHousehold), "JoinCreateHousehold");
         }
@@ -48,7 +49,7 @@ namespace Project1Phase1.Controllers
                 householdRepo.AddRoommateToHome(userId, _home.HomeId);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            return RedirectToAction(nameof(HomeController.JoinCreateHousehold), "JoinCreateHousehold");
+            return RedirectToAction(nameof(HomeController), "JoinCreateHousehold");
         }
 
         //public IActionResult Invite(string householdName, string email)
