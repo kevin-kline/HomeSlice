@@ -26,11 +26,26 @@ namespace Project1Phase1.Controllers
             return View();
         }
 
-        public IActionResult Create(HomeVM name)
+        public IActionResult Create(HomeVM home)
         {
             HouseholdRepo householdRepo = new HouseholdRepo(_context);
-            if (householdRepo.CreateHousehold(name))
+            if (householdRepo.CreateHousehold(home))
             {
+                return RedirectToAction("Join", home);
+            }
+            return RedirectToAction(nameof(HomeController.JoinCreateHousehold), "JoinCreateHousehold");
+        }
+
+        public IActionResult Join(HomeVM home)
+        {
+            HouseholdRepo householdRepo = new HouseholdRepo(_context);
+            var _home = householdRepo.GetHouseholdByName(home.homeName);
+            if (_home.HomeId == home.homeId)
+            {
+                UserRepo userRepo = new UserRepo(_context);
+                var currentUserEmail = User.Identity.Name;
+                var userId = userRepo.FindUserId(currentUserEmail);
+                householdRepo.AddRoommateToHome(userId, _home.HomeId);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             return RedirectToAction(nameof(HomeController.JoinCreateHousehold), "JoinCreateHousehold");

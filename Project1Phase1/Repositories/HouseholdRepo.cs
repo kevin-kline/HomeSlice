@@ -35,12 +35,15 @@ namespace Project1Phase1.Repositories
             return true;
         }
 
-        public bool AddRoommate(Roommate roommate, string homeName)
+        public bool AddRoommateToHome(string roommateId, string homeId)
         {
-            var household = GetHouseholdByName(homeName);
+            var household = GetHouseholdById(homeId);
+            RoomieRepo roomieRepo = new RoomieRepo(_context);
+            var roommate = roomieRepo.GetRoommate(roommateId);
             if (household != null)
             {
-                household.Roommates.Add(roommate);
+                roommate.HomeId = homeId;
+                //household.Roommates.Add(roommate);
                 _context.SaveChanges();
                 return true;
             }

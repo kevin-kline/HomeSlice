@@ -26,5 +26,14 @@ namespace Project1Phase1.Repositories
             return users;
         }
 
+        public string FindUserId(string UserEmail)
+        {
+            var user = _context.Users.Where(u => u.Email == UserEmail).FirstOrDefault();
+            if (user != null)
+            {
+                return user.Id;
+            }
+            return null;
+        }
     }
 }

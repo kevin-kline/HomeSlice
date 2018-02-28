@@ -9,7 +9,7 @@ namespace Project1Phase1.ViewModels
     public class HomeVM
     {
         [DisplayName("Home ID")]
-        public string Id { get; set; }
+        public string homeId { get; set; }
         [DisplayName("Home Name")]
         public string homeName { get; set; }
     }
