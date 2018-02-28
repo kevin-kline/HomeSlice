@@ -62,7 +62,8 @@ namespace Project1Phase1.Controllers
             ProfilePageVM ppvm = new ProfilePageVM()
             {
                 CurrentUser = currentUser,
-                RoomiesRelationships = new List<RoomieAndBalance>()
+                RoomiesRelationships = new List<RoomieAndBalance>(),
+                
             };
             //get all other balances with roomies, put them into a VM,
             //which then goes into another bigger VM

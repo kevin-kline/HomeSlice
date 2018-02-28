@@ -1,10 +1,16 @@
-﻿@{
+﻿@model Project1Phase1.ViewModels.ProfilePageVM
+
+@{
     ViewData["Title"] = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <h2>Personal Summary Page</h2>
+
+<p>Hello, @Model.CurrentUser.Roommate.FirstName!</p>
+
+
 @if (User.IsInRole("HomeAdmin"))
 {
     <div class="row">
