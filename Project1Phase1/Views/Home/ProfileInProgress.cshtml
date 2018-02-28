@@ -1,0 +1,19 @@
+﻿@model Project1Phase1.ViewModels.ProfilePageVM
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>Profile</h2>
+
+<div>
+    <h4>ProfilePageVM</h4>
+    <hr />
+    <dl class="dl-horizontal">
+    </dl>
+</div>
+<h3> @Model.CurrentUser.Roommate.FirstName</h3>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
