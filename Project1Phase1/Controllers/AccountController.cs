@@ -86,17 +86,25 @@ namespace Project1Phase1.Controllers
                 {
                     _logger.LogInformation("User logged in.");
 
-                    //var user = await _userManager.FindByEmailAsync(model.Email);
 
                     //we need another condition here which checks if the user has a household or not
-                    if (!await _userManager.IsEmailConfirmedAsync(user)) {
-                        return RedirectToAction("JoinCreateHousehold", "Home");
-                    }
-                    else
+                    UserRepo userRepo = new UserRepo(_context);
+                    var userId = userRepo.FindUserId(model.Email);
+                    RoomieRepo roomieRepo = new RoomieRepo(_context);
+                    var roommate = roomieRepo.GetRoommate(userId);
+                    if (roommate != null)
                     {
-                        return RedirectToAction("Profile", "Home");
-                        //return RedirectToLocal(returnUrl);
-                    }
+                        if (roommate.HomeId == null)
+                        {
+                            return RedirectToAction("JoinCreateHousehold", "Home");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Profile", "Home");
+                            //return RedirectToLocal(returnUrl);
+                        }
+                    }                    
+                    
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -395,7 +403,7 @@ namespace Project1Phase1.Controllers
             //need to sign in the user before redirecting to next page
             await _signInManager.SignInAsync(user, isPersistent: false);
 
-            return RedirectToAction("Profile", "Home");
+            return RedirectToAction("JoinCreateHousehold", "Home");
             //return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
