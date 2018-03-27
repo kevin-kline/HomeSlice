@@ -105,8 +105,10 @@ namespace Project1Phase1.Controllers
         [HttpPost]
         public IActionResult HandleTransaction(TransactionVM transVM)
         {
-
-            return View();
+            TransactionRepo transRepo = new TransactionRepo(_context);
+            transVM.amount_of_users = transVM.recievers.Length;
+            transRepo.CreateTransaction(transVM);
+            return RedirectToAction("Profile");
         }
         public IActionResult ManageBills()
         {
