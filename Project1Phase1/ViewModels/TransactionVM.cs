@@ -9,8 +9,6 @@ namespace Project1Phase1.ViewModels
 {
     public class TransactionVM
     {
-        [DisplayName ("Transaction Id")]
-        public string id { get; set; }
         [DisplayName("Name")]
         public string name { get; set; }
         public string type { get; set; }
@@ -18,6 +16,6 @@ namespace Project1Phase1.ViewModels
         public decimal amount_total { get; set; }
         public int amount_of_users { get; set; }
         public string sender_id { get; set; }
-        public List<Roommate> recievers { get; set; }
+        public string[] recievers { get; set; }
     }
 }
