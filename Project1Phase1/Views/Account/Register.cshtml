@@ -3,6 +3,10 @@
     ViewData["Title"] = "Register";
 }
 
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
 <h2>@ViewData["Title"]</h2>
 
 <div class="row">
@@ -36,6 +40,8 @@
                 <input asp-for="lastName" class="form-control" />
                 <span asp-validation-for="lastName" class="text-danger"></span>
             </div>
+            <recaptcha />
+            <span class="text-danger" id="recaptchaErrorMessage"></span>
             <button type="submit" class="btn btn-default">Register</button>
         </form>
     </div>
@@ -43,4 +49,14 @@
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    <recaptcha-script jquery-validation="false" validation-message-element-id="recaptchaErrorMessage" />
+    <script>
+
+        recaptchaValidated = function (response) {
+            if (response != null) {
+                $('#submitButton').removeAttr('disabled');
+            }
+        };
+
+    </script>
 }

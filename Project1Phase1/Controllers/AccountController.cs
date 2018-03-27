@@ -15,6 +15,7 @@ using Project1Phase1.Models.AccountViewModels;
 using Project1Phase1.Services;
 using Project1Phase1.Repositories;
 using Project1Phase1.Data;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
 namespace Project1Phase1.Controllers
 {
@@ -254,6 +255,7 @@ namespace Project1Phase1.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ValidateRecaptcha]
         // ZZZ Change RegisterViewModel to also include 'FirstName', 'LastName'.
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
@@ -417,6 +419,7 @@ namespace Project1Phase1.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ValidateRecaptcha]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -463,6 +466,7 @@ namespace Project1Phase1.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ValidateRecaptcha]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
