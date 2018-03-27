@@ -75,7 +75,10 @@
         <a asp-controller="Home" asp-action="Relationship" class="col-lg-4 text-center">See Relationship</a>
         <a asp-controller="Home" asp-action="AddBill" class="col-lg-4 text-center">Add a Bill</a>
         <a asp-controller="Home" asp-action="ManageBills" class="col-lg-4 text-center">Manage your Bills</a>
-        <a asp-controller="Home" asp-action="ManageHousehold" class="col-lg-4 text-center">Manage Household</a>
+        @if (User.IsInRole("HomeAdmin"))
+        {
+            <a asp-controller="Home" asp-action="ManageHousehold" class="col-lg-4 text-center">Manage Household</a>
+        }
     </nav>
 </div>
 
