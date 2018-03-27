@@ -70,5 +70,15 @@ namespace Project1Phase1.Repositories
             return bal;
         }
 
+        public void CreateTransaction()
+        {
+
+        }
+
+        public void CreateRoommateTransaction()
+        {
+
+        }
+
     }
 }
