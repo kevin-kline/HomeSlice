@@ -18,7 +18,7 @@
 
 </style>
 
-    <form asp-action="AddBill" method="post">
+    <form asp-action="HandleTransaction" method="post">
         <input type="text" name="name" />
         <label for="name">Name</label> <br />
         <select class="form-control" name="type">
@@ -32,16 +32,18 @@
         <input type="hidden" value="@Model.currentUser.RoommateId" name="sender_id" />
         <br>
         <label>Roommates:</label>
-        <ul name="recievers">
+        @{ var counter = 0; }
+        <ul>
             @foreach (var roommate in Model.otherRoommates)
             {
                 <li>
-                    <input type="checkbox" value="@roommate" />
+                    <input type="checkbox" name="recievers[@counter]" value="@roommate.RoommateId"/>
                     <label>@roommate.FirstName</label>
                 </li>
+                counter+= 1;
             }
         </ul>
-
+        <input type="submit" />
 
 
     </form>
@@ -121,7 +123,7 @@
         </div>
     </div>*@
 
-    <div class="row">
+    @*<div class="row">
         <div class="col-md-6">
             <h4>Amount</h4>
             <hr />
@@ -144,7 +146,7 @@
             //location.href = '....';
         }
 
-    </script>
+    </script>*@
 
     @section Scripts {
         @await Html.PartialAsync("_ValidationScriptsPartial")

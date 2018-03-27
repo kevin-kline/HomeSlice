@@ -1,4 +1,5 @@
 ﻿using Project1Phase1.Data;
+using Project1Phase1.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,10 +71,10 @@ namespace Project1Phase1.Repositories
             return bal;
         }
 
-        //public void CreateTransaction(string transName, string transType, )
-        //{
-
-        //}
+        public void CreateTransaction(TransactionVM transVm)
+        {
+            
+        }
 
         //public void CreateRoommateTransaction()
         //{
