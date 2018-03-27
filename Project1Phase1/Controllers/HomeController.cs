@@ -91,18 +91,23 @@ namespace Project1Phase1.Controllers
         public IActionResult AddBill()
         {
             // For passing simple types.
-         //   return RedirectToAction("ManageBills", new { productID = 5, productName = "bob"});
-            return View();
+            //   return RedirectToAction("ManageBills", new { productID = 5, productName = "bob"});
+            string userId = User.getUserId();
+            RoomieRepo roomieRepo = new RoomieRepo(_context);
+            Roommate currentSignedInUser = roomieRepo.GetRoommate(userId);
+            IEnumerable<Roommate> roommates = roomieRepo.GetAllOtherRoommates(userId);
+            AddTransactionVM addTransactionVM = new AddTransactionVM { currentUser = currentSignedInUser, otherRoommates = roommates };
+            return View(addTransactionVM);
         }
 
         // *** We need a post enabled action to receive form inputs that are submitted with a post action method.
         // The MySuperModelVM class would have properties that match the control name attributes in the form like radioButton, noOptions
-        //[HttpPost]
-        //public IActionResult(MySuperModelVM superModelVM) {
+        [HttpPost]
+        public IActionResult HandleTransaction(TransactionVM transVM)
+        {
 
-
-        //    return View();
-        //}
+            return View();
+        }
         public IActionResult ManageBills()
         {
             return View();
