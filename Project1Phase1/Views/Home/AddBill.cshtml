@@ -27,25 +27,39 @@
         <div class="col-md-6">
             <h4>Roommates On Bill</h4>
             <hr />
-            <input id="RoommateA" type="checkbox" value="true" name="Kevin" />
+            <input id="RoommateA" type="checkbox" value="Kevin" name="roommates" />
             <label for="RoommateA">&nbsp;Kevin</label> <br />
-            <input id="RoommateB" type="checkbox" value="true" name="Michael" />
+            <input id="RoommateB" type="checkbox" value="Michael" name="roommates" />
             <label for="RoommateB">&nbsp;Michael</label> <br />
-            <input id="RoommateC" type="checkbox" value="true" name="Mina" />
+            <input id="RoommateC" type="checkbox" value="Mina" name="roommates" />
             <label for="RoommateC">&nbsp;Mina</label> <br />
-            <input id="RoommateD" type="checkbox" value="true" name="Tom" />
+            <input id="RoommateD" type="checkbox" value="Tom" name="roommates" />
             <label for="RoommateD">&nbsp;Tom</label> <br />
-            <input id="RoommateE" type="checkbox" value="true" name="Will" />
+            <input id="RoommateE" type="checkbox" value="Will" name="roommates" />
             <label for="RoommateE">&nbsp;Will</label> <br />
         </div>
     </div> <!--logic from db to get names for roommates, dynamic to number of rmtes (js)-->
+
+@{ 
+    DateTime now = DateTime.Now;
+}
+       
+
+
+    <form asp-action="AddBill" method="post">
+        <input type="text" name="name" value="Rent" />
+        <label for="name">Name</label> <br />
+        <input type="text" name="type" value="Bill" />
+        <label for="type">Type</label> <br />
+        <input type="datetime" value="@now" hidden="hidden" name="date"/>
+    </form>
 
     @*<div class="row">
         <div class="col-md-6">
             <h4>Frequency</h4>
             <hr />
 
-            <form name="form" id="form" action="">
+            <form name="form" id="form" method="post" asp-action="AddBill">
 
                 <input type="radio" id="radioButton1" name="radioButton" value="in-campus" />
                 <label for="radioButton1">One Time</label>
