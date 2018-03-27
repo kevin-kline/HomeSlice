@@ -50,8 +50,8 @@ namespace Project1Phase1
                 //options.Password.RequiredUniqueChars    = 6;
 
                 // Lockout settings (Freeze 1 minute only to make testing easier)
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
-                options.Lockout.MaxFailedAccessAttempts = 4; // Lock after 4 consec failed logins
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.MaxFailedAccessAttempts = 3; // Lock after 3 consec failed logins
                 options.Lockout.AllowedForNewUsers = true;
 
                 // User settings
