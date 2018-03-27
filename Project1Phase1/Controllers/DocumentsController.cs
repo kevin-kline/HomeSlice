@@ -20,6 +20,10 @@ namespace Project1Phase1.Controllers
         {
             return View();
         }
+        public IActionResult ApiDoc()
+        {
+            return View();
+        }
         public IActionResult FunctionalRequirements()
         {
             return View();

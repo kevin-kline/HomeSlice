@@ -66,10 +66,10 @@ namespace Project1Phase1.Controllers
         }
 
         [HttpGet]
-        public IActionResult NumberOfUsers()
+        public int NumberOfUsers()
         {
             int numOfUsers = _context.Roommates.Count();
-            return View(numOfUsers);
+            return numOfUsers;
         }
 
         // This Action method requires authentication.

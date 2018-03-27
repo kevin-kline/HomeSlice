@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "API Documentation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>API Documentation</h2>
+<script>
+    var message = fetch('http://homeslice.azurewebsites.net/TokenAPI/NumberOfUsers', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    }).then(function (Response) {
+        return Response.json();
+        }).then(function (jsonData) { 
+            var p = document.createElement("p");
+            var node = document.createTextNode("Server's response is: " + jsonData);
+            p.appendChild(node);
+            document.getElementById("api").appendChild(p);
+        }).catch(function () {
+            var p = document.createElement("p");
+            var node = document.createTextNode("ERROR");
+            p.appendChild(node);
+            document.getElementById("api").appendChild(p);
+    });
+
+    
+
+</script>
+<p>The Server is supposed to return the number of users.</p>
+<div id="api"></div>
+
