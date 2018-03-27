@@ -70,15 +70,15 @@ namespace Project1Phase1.Repositories
             return bal;
         }
 
-        public void CreateTransaction()
-        {
+        //public void CreateTransaction(string transName, string transType, )
+        //{
 
-        }
+        //}
 
-        public void CreateRoommateTransaction()
-        {
+        //public void CreateRoommateTransaction()
+        //{
 
-        }
+        //}
 
     }
 }

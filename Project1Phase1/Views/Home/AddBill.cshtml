@@ -1,58 +1,59 @@
-﻿@{
+﻿@model Project1Phase1.ViewModels.AddTransactionVM
+@{
     ViewData["AddBill"] = "Add Bill";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>@ViewData["AddBill"]</h2>
 
-
-    <div class="row">
-        <div class="col-md-6">
-            <h4>Bill Type</h4>
-            <hr />
-            <select class="form-control" id="AddBill" name="AddBill">
-                <option>Select Bill Type</option>
-                <option>Rent</option>
-                <option>Strata Fees</option>
-                <option>Hydro</option>
-                <option>Cable/Internet</option>
-                <option>Grocery</option>
-                <option id="other">Other</option> //here
-            </select>
-            <br />
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <h4>Roommates On Bill</h4>
-            <hr />
-            <input id="RoommateA" type="checkbox" value="Kevin" name="roommates" />
-            <label for="RoommateA">&nbsp;Kevin</label> <br />
-            <input id="RoommateB" type="checkbox" value="Michael" name="roommates" />
-            <label for="RoommateB">&nbsp;Michael</label> <br />
-            <input id="RoommateC" type="checkbox" value="Mina" name="roommates" />
-            <label for="RoommateC">&nbsp;Mina</label> <br />
-            <input id="RoommateD" type="checkbox" value="Tom" name="roommates" />
-            <label for="RoommateD">&nbsp;Tom</label> <br />
-            <input id="RoommateE" type="checkbox" value="Will" name="roommates" />
-            <label for="RoommateE">&nbsp;Will</label> <br />
-        </div>
-    </div> <!--logic from db to get names for roommates, dynamic to number of rmtes (js)-->
-
 @{ 
     DateTime now = DateTime.Now;
 }
        
+<style>
 
+    ul {
+        list-style: none;
+    }
+
+</style>
 
     <form asp-action="AddBill" method="post">
-        <input type="text" name="name" value="Rent" />
+        <input type="text" name="name" />
         <label for="name">Name</label> <br />
-        <input type="text" name="type" value="Bill" />
+        <select class="form-control" name="type">
+            <option>Bill</option>
+            <option>Payment</option>
+        </select>
         <label for="type">Type</label> <br />
-        <input type="datetime" value="@now" hidden="hidden" name="date"/>
+        <input type="hidden" value="@now" name="date"/>
+        <input type="number" name="amount_total" />
+        <label for="amount_total">Total Amount</label> <br />
+        <input type="hidden" value="@Model.currentUser.RoommateId" name="sender_id" />
+        <br>
+        <label>Roommates:</label>
+        <ul name="recievers">
+            @foreach (var roommate in Model.otherRoommates)
+            {
+                <li>
+                    <input type="checkbox" value="@roommate" />
+                    <label>@roommate.FirstName</label>
+                </li>
+            }
+        </ul>
+
+
+
     </form>
+
+@*@foreach (var item in Model.ExportingGroups)
+{
+    <tr>
+        <td class="js-export-checkbox">
+            @Html.CheckBoxFor(modelItem => item.ToExport)
+        </td>
+    </tr>
+}*@
 
     @*<div class="row">
         <div class="col-md-6">

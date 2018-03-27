@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project1Phase1.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,6 +18,6 @@ namespace Project1Phase1.ViewModels
         public decimal amount_total { get; set; }
         public int amount_of_users { get; set; }
         public string sender_id { get; set; }
-        public List<string> reciever_names { get; set; }
+        public List<Roommate> recievers { get; set; }
     }
 }
