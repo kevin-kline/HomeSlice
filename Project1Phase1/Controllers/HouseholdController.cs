@@ -14,11 +14,13 @@ namespace Project1Phase1.Controllers
     {
         private ApplicationDbContext _context;
         private readonly IEmailSender _emailSender;
+        private IServiceProvider _serviceProvider;
 
-        public HouseholdController(ApplicationDbContext context, IEmailSender emailSender)
+        public HouseholdController(ApplicationDbContext context, IEmailSender emailSender, IServiceProvider serviceProvider)
         {
             _emailSender = emailSender;
             _context = context;
+            _serviceProvider = serviceProvider;
         }
 
         public IActionResult Index()
@@ -32,6 +34,11 @@ namespace Project1Phase1.Controllers
             if (householdRepo.CreateHousehold(home))
             {
                 var _home = householdRepo.GetHouseholdByName(home.homeName);
+
+                //Role Assignment
+                UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider);
+                userRoleRepo.AddUserRole(User.Identity.Name, "HomeAdmin");
+
                 return RedirectToAction("Join", _home);
             }
             return RedirectToAction("JoinCreateHousehold", "Home");
@@ -49,6 +56,11 @@ namespace Project1Phase1.Controllers
                     var currentUserEmail = User.Identity.Name;
                     var userId = userRepo.FindUserId(currentUserEmail);
                     householdRepo.AddRoommateToHome(userId, _home.HomeId);
+
+                    //Role Assignment
+                    UserRoleRepo userRoleRepo = new UserRoleRepo(_serviceProvider);
+                    userRoleRepo.AddUserRole(currentUserEmail, "Roommate");
+
                     return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
             }
