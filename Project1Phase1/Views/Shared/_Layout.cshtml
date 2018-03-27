@@ -28,16 +28,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <img src="~/images/homeslice_logo.png" class="navbar-brand">
                 <a asp-area="" asp-controller="Documents" asp-action="Index" class="navbar-brand">Documentation</a>
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <!-- <li><a asp-area="" asp-controller="Home" asp-action="JoinCreateHousehold">Join/Create Household</a></li>
                      <li><a asp-area="" asp-controller="Home" asp-action="ManageHousehold">Manage Household</a></li>-->
-                    
-                    <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profile</a></li>
-                    
+                    @if (User.IsInRole("HomeAdmin"))
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profile</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="TokenAPI" asp-action="NumberOfUsers">API</a></li>
+                    }
+
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="Relationship">Relationship</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="AddBill">Add Bill</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="ManageBills">Manage Bills</a></li>-->
@@ -45,13 +53,12 @@
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="ManageHousehold">Manage Household</a></li>
                     }
-                    @if (User.IsInRole("AppAdmin")) 
+                    @if (User.IsInRole("AppAdmin"))
                     {
-                     <li><a asp-area="" asp-controller="Role" asp-action="Index">Roles</a></li>
-
-                  <li><a asp-area="" asp-controller="UserRole" asp-action="Index">User Roles</a></li>
+                        <li><a asp-area="" asp-controller="Role" asp-action="Index">Roles</a></li>
+                        <li><a asp-area="" asp-controller="UserRole" asp-action="Index">User Roles</a></li>
                     }
-                     
+
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="JoinCreateHousehold">Join/Create Household</a></li>-->
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="ManageHousehold">Manage Household</a></li>-->
                     <!--<li><a asp-area="" asp-controller="Home" asp-action="Relationship">Relationship</a></li>-->

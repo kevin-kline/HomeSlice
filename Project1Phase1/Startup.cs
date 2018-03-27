@@ -14,6 +14,7 @@ using Project1Phase1.Services;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
 namespace Project1Phase1
 {
@@ -38,7 +39,8 @@ namespace Project1Phase1
 
             // Add application services. Enabling lockout.
             services.AddTransient<IEmailSender, EmailSender>();
-            services.Configure<IdentityOptions>(options => {
+            services.Configure<IdentityOptions>(options =>
+            {
                 //// Password settings if you want to ensure password strength.
                 //options.Password.RequireDigit           = true;
                 //options.Password.RequiredLength         = 8;
@@ -56,7 +58,8 @@ namespace Project1Phase1
                 options.User.RequireUniqueEmail = true;
             });
             //add cors
-            services.AddCors(options => {
+            services.AddCors(options =>
+            {
                 options.AddPolicy("AllowAll",
                     builder =>
                     {
@@ -70,7 +73,8 @@ namespace Project1Phase1
             // Add this before services.AddMvc()
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication()
-            .AddJwtBearer(cfg => {
+            .AddJwtBearer(cfg =>
+            {
                 cfg.RequireHttpsMetadata = false;
                 cfg.SaveToken = true;
                 cfg.TokenValidationParameters = new TokenValidationParameters
@@ -79,7 +83,13 @@ namespace Project1Phase1
                     ValidAudience = Configuration["TokenInformation:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenInformation:Key"])),
                     ClockSkew = TimeSpan.Zero // remove delay of token when expire
-    };
+                };
+            });
+
+            services.AddRecaptcha(new RecaptchaOptions
+            {
+                SiteKey = Configuration["Recaptcha:SiteKey"],
+                SecretKey = Configuration["Recaptcha:SecretKey"]
             });
 
             services.AddMvc();
