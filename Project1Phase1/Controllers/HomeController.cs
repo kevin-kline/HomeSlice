@@ -99,9 +99,7 @@ namespace Project1Phase1.Controllers
             AddTransactionVM addTransactionVM = new AddTransactionVM { currentUser = currentSignedInUser, otherRoommates = roommates };
             return View(addTransactionVM);
         }
-
-        // *** We need a post enabled action to receive form inputs that are submitted with a post action method.
-        // The MySuperModelVM class would have properties that match the control name attributes in the form like radioButton, noOptions
+        
         [HttpPost]
         public IActionResult HandleTransaction(TransactionVM transVM)
         {
