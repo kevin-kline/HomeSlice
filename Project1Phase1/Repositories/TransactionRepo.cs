@@ -25,21 +25,21 @@ namespace Project1Phase1.Repositories
                 .Where(i => i.ReceiverId == userId);
             foreach (var trans in transReceived)
             {
-                decimal transBalance = trans.AmountToReceiver;
-                bal += transBalance;
+                bal += trans.AmountToReceiver;
             }
             //adding all the bill amounts that the current user has posted to the balance
             IEnumerable<Transaction> transactions = _context.Transactions
                 .Where(t => t.SenderId == userId);
             foreach (var transaction in transactions)
             {
-                IEnumerable<RoommateTransaction> transSent = transaction.RoommateTransactions;
+                IEnumerable<RoommateTransaction> transSent = _context.RoommateTransactions
+                    .Where(i => i.TransactionId == transaction.TransactionId);
                 foreach (var trans in transSent)
                 {
-                    decimal billBalance = trans.AmountToReceiver;
-                    bal += billBalance;
+                    bal += trans.AmountToReceiver;
                 }
             }
+            Console.WriteLine(bal);
             return bal;
         }
 
@@ -73,13 +73,37 @@ namespace Project1Phase1.Repositories
 
         public void CreateTransaction(TransactionVM transVm)
         {
-            
+            var transaction = new Transaction
+                {
+                    SenderId = transVm.sender_id,
+                    Name = transVm.name,
+                    Type = transVm.type,
+                    DateTime = transVm.date,
+                    AmountOfRoommates = transVm.amount_of_users,
+                    AmountTotal = transVm.amount_total
+                };
+            _context.Transactions.Add(transaction);
+            _context.SaveChanges();
+
+            //get amount to receiver by dividing total-amount by amount-of-users + 1 sender 
+            decimal amountToReceiver = transVm.amount_total / (transVm.amount_of_users + 1);
+            foreach (string userId in transVm.recievers)
+            {
+                CreateRoommateTransaction(transaction.TransactionId, 
+                    userId, amountToReceiver);
+            }
         }
 
-        //public void CreateRoommateTransaction()
-        //{
-
-        //}
+        public void CreateRoommateTransaction(int transactionId, string receiverId, decimal amountToReceiver)
+        {
+            _context.RoommateTransactions.Add(new RoommateTransaction
+            { 
+                TransactionId = transactionId,
+                ReceiverId = receiverId,
+                AmountToReceiver = amountToReceiver
+            });
+            _context.SaveChanges();
+        }
 
     }
 }

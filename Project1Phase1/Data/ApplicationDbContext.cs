@@ -43,7 +43,7 @@ namespace Project1Phase1.Data
         public string Type { get; set; }
         public DateTime DateTime { get; set; }
         public int AmountOfRoommates { get; set; }
-
+        public decimal AmountTotal { get; set; }
         public string SenderId { get; set; }
 
         //navigation Properties
