@@ -81,7 +81,17 @@
                 var balanceOwed = roommate.Balance;
 
                         <tr>
-                            <td><strong>@roommate.Roommate.FirstName</strong></td>
+                            <td>@Html.ActionLink(
+                                    linkText: roommate.Roommate.FirstName,
+                                    actionName: "Relationship",
+                                    controllerName: "Home",
+                                    routeValues: new
+                                    {
+                                        roommateId = roommate.Roommate.RoommateId
+                                    },
+                                    htmlAttributes: null
+                                )
+                            </td>
                             <td><img src="~/images/profile-pictures.png" class="img-rounded" width="80" /></td>
                             @if (roommate.Balance > 0)
                 {
@@ -113,7 +123,6 @@
         <nav class="navbar navbar-dark bg-dark">
             <!-- Navbar content -->
 
-            <a asp-controller="Home" asp-action="Relationship" class="col-lg-4 text-center">See Relationship</a>
             <a asp-controller="Home" asp-action="AddBill" class="col-lg-4 text-center">Add a Bill</a>
             <a asp-controller="Home" asp-action="ManageBills" class="col-lg-4 text-center">Manage your Bills</a>
             @if (User.IsInRole("HomeAdmin"))
