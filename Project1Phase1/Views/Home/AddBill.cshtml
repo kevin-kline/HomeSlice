@@ -18,35 +18,47 @@
 
 </style>
 
-    <form asp-action="HandleTransaction" method="post">
-        <input type="text" name="name" />
-        <label for="name">Name</label> <br />
-        <select class="form-control" name="type">
-            <option>Bill</option>
-            <option>Payment</option>
-        </select>
-        <label for="type">Type</label> <br />
-        <input type="hidden" value="@now" name="date"/>
-        <input type="number" name="amount_total" />
-        <label for="amount_total">Total Amount</label> <br />
-        <input type="hidden" value="@Model.currentUser.RoommateId" name="sender_id" />
-        <br>
-        <label>Roommates:</label>
-        @{ var counter = 0; }
-        <ul>
-            @foreach (var roommate in Model.otherRoommates)
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="HandleTransaction" method="post">
+
+            <label for="name">Name of Bill</label> <br/>
+                <input type="text" name="name" />
+
+            <br /><br />
+
+            <label for="type">Type</label> <br />
+                <select class="form-control" name="type">
+                    <option>Send A Bill</option>
+                    <option>Make A Payment</option>
+                </select>
+
+            <br /><br />
+
+            <label for="type">Type</label> <br />
+            <input type="hidden" value="@now" name="date" />
+            <input type="number" name="amount_total" />
+            <label for="amount_total">Total Amount</label> <br />
+            <input type="hidden" value="@Model.currentUser.RoommateId" name="sender_id" />
+            <br>
+            <label>Roommates:</label>
+            @{ var counter = 0; }
+            <ul>
+                @foreach (var roommate in Model.otherRoommates)
             {
-                <li>
-                    <input type="checkbox" name="recievers" value="@roommate.RoommateId"/>
-                    <label>@roommate.FirstName</label>
-                </li>
-                counter+= 1;
-            }
-        </ul>
-        <input type="submit" />
+                    <li>
+                        <input type="checkbox" name="recievers" value="@roommate.RoommateId" />
+                        <label>@roommate.FirstName</label>
+                    </li>
+                    counter += 1;
+                }
+            </ul>
+            <input type="submit" />
 
 
-    </form>
+        </form>
+    </div>
+</div>
 
 @*@foreach (var item in Model.ExportingGroups)
 {
