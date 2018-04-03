@@ -37,7 +37,6 @@ namespace Project1Phase1.Controllers
         }
 
         [ValidateRecaptcha]
-        [HttpPost]
         public IActionResult Create(HomeVM home)
         {
             HouseholdRepo householdRepo = new HouseholdRepo(_context);
@@ -56,7 +55,6 @@ namespace Project1Phase1.Controllers
         }
 
         [ValidateRecaptcha]
-        [HttpPost]
         public IActionResult Join(HomeVM home)
         {
             HouseholdRepo householdRepo = new HouseholdRepo(_context);
