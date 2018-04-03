@@ -5,116 +5,119 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*@if (User.IsInRole("HomeAdmin"))
+@if (User.IsInRole("HomeAdmin"))
 {
     <div class="row">
         <a asp-area="" asp-controller="Home" asp-action="ManageHousehold">Manage Household</a>
     </div>
-}*@
-
-@{  
-    string totalBalanceColor = "forestgreen";
-    string relationshipBalanceColor = "forestgreen";
- }
-@if (Model.CurrentUser.Balance < 0)
-{
-    totalBalanceColor = "tomato";
 }
 
+@{
+    string totalBalanceColor = "forestgreen";
+    string relationshipBalanceColor = "forestgreen";
+}
+
+@if (Model.CurrentUser.Balance > 0)
+{
+    totalBalanceColor = "red";
+}
+
+
+
 <h3>Hey @Model.CurrentUser.Roommate.FirstName!</h3>
-<h4>Your balance with the household is <span style="color:@totalBalanceColor">@Model.CurrentUser.Balance</span></h4>
+<br />
+<h4>Your balance with the household is <span style="color:@totalBalanceColor">@Math.Round(Model.CurrentUser.Balance, 2)</span></h4>
 
 <br />
 
 <h2>ROOMMATES</h2>
-<table>
-    <tr>
-    <th>Roommate</th><th></th><th>Balance</th>
-    @foreach (var roommate in Model.RoomiesRelationships)
-    {
-        var balanceOwed = roommate.Balance;
-        <tr>
-            <td>@roommate.Roommate.FirstName</td>
-            @if (roommate.Balance < 0)
-            {
-                balanceOwed *= -1; 
-                <td> owes you </td>
-                <td><span style="color:@relationshipBalanceColor">@balanceOwed</span></td>
-            }
-            else if (roommate.Balance > 0)
-            {
-                relationshipBalanceColor = "tomato";
-                <td> you owe </td>
-                <td><span style="color:@relationshipBalanceColor">@balanceOwed</span></td>
-            }
-            else
-            {
-                <td></td>
-                <td>@roommate.Balance</td>
-            }
-        </tr>
-    }
-</table>
 
-@*<div class="row">
-    <table>
-        <colgroup>
-            <col style="width:25%">
-            <col style="width:50%">
-            <col style="width:25%">
-        </colgroup>
-        <tbody style="text-align: center">
-            <tr class="bg-success">
-                <td><img src="~/images/profile-pictures.png" width="300" class="img-rounded" /></td>
-                <td><strong>@Model.CurrentUser.Roommate.FirstName//HOUSEHOLD// OWES YOU</strong></td>
-                <td>$100.00</td>
-            </tr>
-        </tbody>
-    </table>
-</div>*@
-
-@*<div class="row">
-    <table>
-        <colgroup>
-            <col style="width:25%">
-            <col style="width:50%">
-            <col style="width:25%">
-        </colgroup>
-        <tbody style="text-align: center">
-            <tr class="bg-success">
-                <td><img src="~/images/profile-pictures.png" width="200" class="img-rounded" /></td>
-                <td><strong>//USER// OWES YOU</strong></td>
-                <td>$200.00</td>
-            </tr>
-            <tr class="bg-danger">
-                <td><img src="~/images/profile-pictures.png" width="200" class="img-rounded" /></td>
-                <td><strong>//USER// YOU OWE</strong></td>
-                <td>$100.00</td>
-            </tr>
-        </tbody>
-    </table>
-</div>*@
-
-
-@*<div class="row">
-        <div class="col-lg-2"></div>
-        <img class="col-lg-8" src="~/images/Profile3.jpg" />
-        <div class="col-lg-2"></div>
-    </div>*@
-<br />
 <div class="row">
-    @*Will: turns  footer options into a nav bar of sorts*@
-    <nav class="navbar navbar-dark bg-dark">
-        <!-- Navbar content -->
+    <table>
+        <colgroup>
+            <col style="width:25%">
+            <col style="width:50%">
+            <col style="width:25%">
+        </colgroup>
+        <tbody style="text-align: center">
+            <tr>
+                <th>Roommates</th>
+                <th></th>
+                <th></th>
+                <th>Balance</th>
+                @foreach (var roommate in Model.RoomiesRelationships)
+            {
+                var balanceOwed = roommate.Balance;
 
-        <a asp-controller="Home" asp-action="Relationship" class="col-lg-4 text-center">See Relationship</a>
-        <a asp-controller="Home" asp-action="AddBill" class="col-lg-4 text-center">Add a Bill</a>
-        <a asp-controller="Home" asp-action="ManageBills" class="col-lg-4 text-center">Manage your Bills</a>
-        @if (User.IsInRole("HomeAdmin"))
-        {
-            <a asp-controller="Home" asp-action="ManageHousehold" class="col-lg-4 text-center">Manage Household</a>
-        }
-    </nav>
+                <tr>
+                    <td><strong>@roommate.Roommate.FirstName</strong></td>
+                    @if (roommate.Balance > 0)
+                {
+                    balanceOwed *= -1;
+                        <td><img src="~/images/profile-pictures.png" class="img-rounded" width="100" /></td>
+                        <td> OWES YOU </td>
+                            <td><span style="color:@relationshipBalanceColor"> $ @Math.Round(balanceOwed, 2)</span></td>
+                    }
+                    else if (roommate.Balance < 0)
+                    {
+                        relationshipBalanceColor = "tomato";
+                        <td><img src="~/images/profile-pictures.png" class="img-rounded" width="100"/></td>
+                        <td> YOU OWE </td>
+                            <td><span style="color:@relationshipBalanceColor"> $ @Math.Round(balanceOwed, 2)</span></td>
+                    }
+                    else
+                    {
+                        <td><img src="~/images/profile-pictures.png" class="img-rounded" width="100" /></td>
+                        <td> BALANCE IS </td>
+                            <td> $ @roommate.Balance</td>
+                    }
+                </tr>
+             }
+            </tbody>
+    </table>
 </div>
+ 
 
-<br />
+
+
+
+        @*<div class="row">
+                <table>
+                    <colgroup>
+                        <col style="width:25%">
+                        <col style="width:50%">
+                        <col style="width:25%">
+                    </colgroup>
+                    <tbody style="text-align: center">
+                        <tr class="bg-success">
+                            <td><img src="~/images/profile-pictures.png" width="300" class="img-rounded" /></td>
+                            <td><strong>@Model.CurrentUser.Roommate.FirstName//HOUSEHOLD// OWES YOU</strong></td>
+                            <td>$100.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>*@
+
+
+        @*<div class="row">
+                <div class="col-lg-2"></div>
+                <img class="col-lg-8" src="~/images/Profile3.jpg" />
+                <div class="col-lg-2"></div>
+            </div>*@
+        <br />
+        <div class="row">
+            @*Will: turns  footer options into a nav bar of sorts*@
+            <nav class="navbar navbar-dark bg-dark">
+                <!-- Navbar content -->
+
+                <a asp-controller="Home" asp-action="Relationship" class="col-lg-4 text-center">See Relationship</a>
+                <a asp-controller="Home" asp-action="AddBill" class="col-lg-4 text-center">Add a Bill</a>
+                <a asp-controller="Home" asp-action="ManageBills" class="col-lg-4 text-center">Manage your Bills</a>
+                @if (User.IsInRole("HomeAdmin"))
+                {
+                    <a asp-controller="Home" asp-action="ManageHousehold" class="col-lg-4 text-center">Manage Household</a>
+                }
+            </nav>
+        </div>
+
+        <br />
