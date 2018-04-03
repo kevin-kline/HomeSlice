@@ -11,6 +11,6 @@ namespace Project1Phase1.ViewModels
         public Roommate CurrentUser { get; set; }
         public Roommate Roommate { get; set; }
         public decimal RelationshipBalance { get; set; }
-        public IEnumerable<RoommateTransaction> OneRoommateTranstactions { get; set; }
+        public List<RoommateTransaction> OneRoommateTranstactions { get; set; }
     }
 }

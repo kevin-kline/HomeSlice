@@ -89,7 +89,7 @@ namespace Project1Phase1.Controllers
             string userId = User.getUserId();
             Roommate currentSignedInUser = roomieRepo.GetRoommate(userId);
             Roommate roommate = roomieRepo.GetRoommate(roommateId);
-            IEnumerable<RoommateTransaction> transactions = transRepo.GetAllRelationshipTransactions(userId, roommateId);
+            List<RoommateTransaction> transactions = transRepo.GetAllRelationshipTransactions(userId, roommateId).ToList();
             decimal relationshipBalance = transRepo.GetIndividualRelationshipBalance(userId, roommateId);
 
             RelationshipVM relVM = new RelationshipVM()
