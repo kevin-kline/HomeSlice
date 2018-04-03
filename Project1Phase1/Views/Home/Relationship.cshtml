@@ -1,4 +1,5 @@
-﻿
+﻿@model Project1Phase1.ViewModels.RelationshipVM
+
 @{
     ViewData["Title"] = "Relationship";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -31,10 +32,13 @@
             <button type="submit">Make a payment</button>
         </form>
     </div>
+
+   
+
     <div class="row">
         <table style="border: double; margin: auto">
             <caption style="text-align: center">
-                Balance histoy
+                Balance history
             </caption>
             <colgroup>
                 <col style="width:20%">
@@ -79,5 +83,49 @@
                 </tr>
             </tbody>
         </table>
+
+       
+    </div>
+    <hr />
+    <div class="row">
+        <h2>@Model.CurrentUser.FirstName & @Model.Roommate.FirstName Relationship</h2>
+    </div>
+    <h2>Transactions List</h2>
+    <table class="table">
+       
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Total Amount</th>
+                <th>Amount per person</th>
+            </tr>
+
+            @foreach (var transaction in Model.OneRoommateTranstactions)
+            {
+                <tr>
+                    
+                    <td>@transaction.Transaction.DateTime</td>
+                    <td>@transaction.Transaction.Type</td>
+                    <td>@transaction.Transaction.Name</td>
+                    <td>@transaction.Transaction.AmountTotal</td>
+                    <td>@transaction.AmountToReceiver</td>
+                    
+                </tr>
+            }
+
+    </table>
+    <br />
+    <div class="row" style="font-size: 2em">
+        <lable>Total balance:</lable>
+        <span style="border: 2px solid black">$@Model.RelationshipBalance</span>
+    </div>
+    <div class="row">
+        <form method="get" action="#">
+            <lable>Payment amount:</lable>
+            <input type="text" />
+            <button type="submit">Make a payment</button>
+        </form>
     </div>
 </div>
+

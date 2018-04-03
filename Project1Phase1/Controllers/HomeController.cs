@@ -79,11 +79,25 @@ namespace Project1Phase1.Controllers
             }
             return View(ppvm);
         }
-        public IActionResult Relationship()
+        public IActionResult Relationship(string roommateId)
         {
+            RoomieRepo roomieRepo = new RoomieRepo(_context);
+            TransactionRepo transRepo = new TransactionRepo(_context);
+            string userId = User.getUserId();
+            Roommate currentSignedInUser = roomieRepo.GetRoommate(userId);
+            Roommate roommate = roomieRepo.GetRoommate(roommateId);
+            List<RoommateTransaction> transactions = transRepo.GetAllRelationshipTransactions(userId, roommateId).ToList();
+            decimal relationshipBalance = transRepo.GetIndividualRelationshipBalance(userId, roommateId);
 
+            RelationshipVM relVM = new RelationshipVM()
+            {
+                CurrentUser = currentSignedInUser,
+                Roommate = roommate,
+                OneRoommateTranstactions = transactions,
+                RelationshipBalance = relationshipBalance
+            };
 
-            return View();
+            return View(relVM);
         }
         public IActionResult AddBill()
         {
@@ -101,7 +115,7 @@ namespace Project1Phase1.Controllers
         public IActionResult HandleTransaction(TransactionVM transVM)
         {
             TransactionRepo transRepo = new TransactionRepo(_context);
-            transVM.amount_of_users = transVM.recievers.Length;
+            transVM.amount_of_users = transVM.recievers.Count();
             transRepo.CreateTransaction(transVM);
             return RedirectToAction("Profile");
         }
