@@ -1,4 +1,5 @@
-﻿
+﻿@model Project1Phase1.ViewModels.RelationshipVM
+
 @{
     ViewData["Title"] = "Relationship";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -31,10 +32,13 @@
             <button type="submit">Make a payment</button>
         </form>
     </div>
+
+   
+
     <div class="row">
         <table style="border: double; margin: auto">
             <caption style="text-align: center">
-                Balance histoy
+                Balance history
             </caption>
             <colgroup>
                 <col style="width:20%">
@@ -79,5 +83,20 @@
                 </tr>
             </tbody>
         </table>
+
+
+    </div>
+    <br />
+    <div class="row" style="font-size: 2em">
+        <lable>Total balance:</lable>
+        <span style="border: 2px solid black">$@Model.RelationshipBalance</span>
+    </div>
+    <div class="row">
+        <form method="get" action="#">
+            <lable>Payment amount:</lable>
+            <input type="text" />
+            <button type="submit">Make a payment</button>
+        </form>
     </div>
 </div>
+

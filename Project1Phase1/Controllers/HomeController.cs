@@ -82,11 +82,25 @@ namespace Project1Phase1.Controllers
             }
             return View(ppvm);
         }
-        public IActionResult Relationship()
+        public IActionResult Relationship(string roommateId)
         {
+            RoomieRepo roomieRepo = new RoomieRepo(_context);
+            TransactionRepo transRepo = new TransactionRepo(_context);
+            string userId = User.getUserId();
+            Roommate currentSignedInUser = roomieRepo.GetRoommate(userId);
+            Roommate roommate = roomieRepo.GetRoommate(roommateId);
+            IEnumerable<RoommateTransaction> transactions = transRepo.GetAllRelationshipTransactions(userId, roommateId);
+            decimal relationshipBalance = transRepo.GetIndividualRelationshipBalance(userId, roommateId);
 
+            RelationshipVM relVM = new RelationshipVM()
+            {
+                CurrentUser = currentSignedInUser,
+                Roommate = roommate,
+                OneRoommateTranstactions = transactions,
+                RelationshipBalance = relationshipBalance
+            };
 
-            return View();
+            return View(relVM);
         }
         public IActionResult AddBill()
         {

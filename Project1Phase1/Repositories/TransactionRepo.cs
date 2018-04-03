@@ -47,9 +47,11 @@ namespace Project1Phase1.Repositories
         {
             decimal bal = 0;
             //adding all the transactions from the roommate to the current user to the balance
-            IEnumerable<RoommateTransaction> transReceived = _context.RoommateTransactions
-                .Where(i => i.ReceiverId == userId)
-                .Where(i => i.Transaction.SenderId == roommateId);
+            IEnumerable<RoommateTransaction> transReceived = GetRelationshipTransactionsOneWay(roommateId, userId);
+           
+            //adding all the transactions from the current user to the roommate to the balance
+            IEnumerable<RoommateTransaction> transactionsSent = GetRelationshipTransactionsOneWay(userId, roommateId);
+
             foreach (var trans in transReceived)
             {
                 decimal transBalance = trans.AmountToReceiver;
@@ -59,16 +61,31 @@ namespace Project1Phase1.Repositories
                                      //Hear me out. I realize I may be crazy, but not in this case
                                      //(I think).
             }
-            //adding all the transactions from the current user to the roommate to the balance
-            IEnumerable<RoommateTransaction> transactionsSent = _context.RoommateTransactions
-                .Where(i => i.ReceiverId == roommateId)
-                .Where(i => i.Transaction.SenderId == userId);
             foreach (var trans in transactionsSent)
             {
                 decimal transBalance = trans.AmountToReceiver;
                 bal -= transBalance;
             }
             return bal;
+        }
+
+        public IEnumerable<RoommateTransaction> GetAllRelationshipTransactions(string currentUserId, string roommateId)
+        {
+            IEnumerable<RoommateTransaction> relationshipTransactions1 = GetRelationshipTransactionsOneWay(currentUserId, roommateId);
+            IEnumerable<RoommateTransaction> relationshipTransactions2 = GetRelationshipTransactionsOneWay(roommateId, currentUserId);
+
+            IEnumerable<RoommateTransaction> allRelationshipTransactions = relationshipTransactions1.Concat(relationshipTransactions2);
+
+            return allRelationshipTransactions;
+        }
+
+        //only gets half the total roommate transactions between two roommates
+        private IEnumerable<RoommateTransaction> GetRelationshipTransactionsOneWay(string senderId, string receiverId)
+        {
+            IEnumerable<RoommateTransaction> oneWayRoomieTransactions = _context.RoommateTransactions
+                .Where(i => i.ReceiverId == receiverId)
+                .Where(i => i.Transaction.SenderId == senderId);
+            return oneWayRoomieTransactions;
         }
 
         public void CreateTransaction(TransactionVM transVm)
