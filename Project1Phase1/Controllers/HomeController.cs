@@ -31,11 +31,8 @@ namespace Project1Phase1.Controllers
         {
             return View();
         }
-        public IActionResult JoinCreateHousehold()
-        {
-            return View();
-        }
-         [Authorize(Roles = "HomeAdmin")] 
+                
+        [Authorize(Roles = "HomeAdmin")] 
         public IActionResult ManageHousehold()
         {
             return View();
