@@ -1,4 +1,5 @@
 ﻿@model Project1Phase1.ViewModels.AddTransactionVM
+
 @{
     ViewData["AddBill"] = "Add Bill";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,43 +21,64 @@
 
 <div class="row">
     <div class="col-md-6">
+
         <form asp-action="HandleTransaction" method="post">
 
             <label for="name">Name of Bill</label> <br/>
-                <input type="text" name="name" />
+            <select class="form-control" name="name">
+                <option value="Rent">Rent</option>
+                <option value="Hydro">Hydro</option>
+                <option value="Internet">Internet</option>
+                <option value="Hydro">Hydro</option>
+                <option value="Hydro">Hydro</option>
+                <option value="text" id="other">Other</option>
+            </select>
+
+            @*<div id="container"></div>
+            <script>
+                if ($('#other').selected) {
+                    var newTextBox = document.createElement("input");
+                    newTextBox.type = "text";
+                    var container = document.getElementById("container");
+                    container.appendChild(newTextBox);
+                }
+            </script>*@
 
             <br /><br />
 
             <label for="type">Type</label> <br />
                 <select class="form-control" name="type">
-                    <option>Send A Bill</option>
-                    <option>Make A Payment</option>
+                    <option value="Bill">Send A Bill</option>
+                    <option value="Payment">Make A Payment</option>
                 </select>
 
             <br /><br />
 
-            <label for="type">Type</label> <br />
-            <input type="hidden" value="@now" name="date" />
-            <input type="number" name="amount_total" />
             <label for="amount_total">Total Amount</label> <br />
+            <input type="hidden" value="@now" name="date" />
             <input type="hidden" value="@Model.currentUser.RoommateId" name="sender_id" />
-            <br>
-            <label>Roommates:</label>
+            <input  class="form-control" type="number" name="amount_total" />
+
+            <br/><br />
+
+            <label for="roomates">Roommates:</label> <br />
             @{ var counter = 0; }
             <ul>
-                @foreach (var roommate in Model.otherRoommates)
-            {
-                    <li>
-                        <input type="checkbox" name="recievers" value="@roommate.RoommateId" />
-                        <label>@roommate.FirstName</label>
-                    </li>
-                    counter += 1;
-                }
+                    @foreach (var roommate in Model.otherRoommates) {
+                        <li>
+                            <input type="checkbox" name="recievers" value="@roommate.RoommateId" />
+                            <label>@roommate.FirstName</label>
+                        </li>
+                        counter += 1;
+                    }
             </ul>
+
+            <br /><br />
+
             <input type="submit" />
 
-
         </form>
+
     </div>
 </div>
 
