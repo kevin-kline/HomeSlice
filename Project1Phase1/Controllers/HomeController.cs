@@ -104,7 +104,7 @@ namespace Project1Phase1.Controllers
         public IActionResult HandleTransaction(TransactionVM transVM)
         {
             TransactionRepo transRepo = new TransactionRepo(_context);
-            transVM.amount_of_users = transVM.recievers.Length;
+            transVM.amount_of_users = transVM.recievers.Count();
             transRepo.CreateTransaction(transVM);
             return RedirectToAction("Profile");
         }

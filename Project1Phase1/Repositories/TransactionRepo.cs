@@ -73,6 +73,10 @@ namespace Project1Phase1.Repositories
 
         public void CreateTransaction(TransactionVM transVm)
         {
+            if(transVm.type == "Bill")
+            {
+                transVm.amount_total *= -1;
+            }
             var transaction = new Transaction
                 {
                     SenderId = transVm.sender_id,
@@ -85,8 +89,15 @@ namespace Project1Phase1.Repositories
             _context.Transactions.Add(transaction);
             _context.SaveChanges();
 
-            //get amount to receiver by dividing total-amount by amount-of-users + 1 sender 
-            decimal amountToReceiver = transVm.amount_total / (transVm.amount_of_users + 1);
+            decimal amountToReceiver;
+            if (transVm.amount_of_users > 1)
+            {
+                //get amount to receiver by dividing total-amount by amount-of-users + 1 sender 
+                amountToReceiver = transVm.amount_total / (transVm.amount_of_users + 1);
+            }else
+            {
+                amountToReceiver = transVm.amount_total;
+            }
             foreach (string userId in transVm.recievers)
             {
                 CreateRoommateTransaction(transaction.TransactionId, 

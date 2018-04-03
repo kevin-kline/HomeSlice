@@ -37,7 +37,7 @@
             @foreach (var roommate in Model.otherRoommates)
             {
                 <li>
-                    <input type="checkbox" name="recievers[@counter]" value="@roommate.RoommateId"/>
+                    <input type="checkbox" name="recievers" value="@roommate.RoommateId"/>
                     <label>@roommate.FirstName</label>
                 </li>
                 counter+= 1;
