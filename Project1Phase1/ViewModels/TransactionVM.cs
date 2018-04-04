@@ -18,6 +18,6 @@ namespace Project1Phase1.ViewModels
         public decimal amount_total { get; set; }
         public int amount_of_users { get; set; }
         public string sender_id { get; set; }
-        public List<string> recievers { get; set; }
+        public List<string> receivers { get; set; }
     }
 }

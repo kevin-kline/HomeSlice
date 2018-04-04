@@ -20,27 +20,17 @@ namespace Project1Phase1.Repositories
 
         public decimal GetTotalBalance(string userId)
         {
+            RoomieRepo roomieRepo = new RoomieRepo(_context);
+            List<Roommate> roommies = roomieRepo.GetAllOtherRoommates(userId).ToList();
+
             decimal bal = 0;
-            //adding all the payments from the roommates to the current user to the balance
-            IEnumerable<RoommateTransaction> transReceived = _context.RoommateTransactions
-                .Where(i => i.ReceiverId == userId);
-            foreach (var trans in transReceived)
+
+            foreach (Roommate roommie in roommies)
             {
-                bal += trans.AmountToReceiver;
+                decimal individualBal = GetIndividualRelationshipBalance(userId, roommie.RoommateId);
+                bal += individualBal;
             }
-            //adding all the bill amounts that the current user has posted to the balance
-            IEnumerable<Transaction> transactions = _context.Transactions
-                .Where(t => t.SenderId == userId);
-            foreach (var transaction in transactions)
-            {
-                IEnumerable<RoommateTransaction> transSent = _context.RoommateTransactions
-                    .Where(i => i.TransactionId == transaction.TransactionId);
-                foreach (var trans in transSent)
-                {
-                    bal += trans.AmountToReceiver;
-                }
-            }
-            Console.WriteLine(bal);
+
             return bal;
         }
 
@@ -56,16 +46,16 @@ namespace Project1Phase1.Repositories
             foreach (var trans in transReceived)
             {
                 decimal transBalance = trans.AmountToReceiver;
-                bal += transBalance; //Kevin, for this particular one we need one of them to be -=
+                bal -= transBalance; //Kevin, for this particular one we need one of them to be -=
                                      //because we are querying the RoommateTransactions twice,
                                      //not the RoommateTransaction table and the Transaction table.
                                      //Hear me out. I realize I may be crazy, but not in this case
-                                     //(I think).
+                                     //(I think)
             }
             foreach (var trans in transactionsSent)
             {
                 decimal transBalance = trans.AmountToReceiver;
-                bal -= transBalance;
+                bal += transBalance;
             }
             return bal;
         }
@@ -92,10 +82,7 @@ namespace Project1Phase1.Repositories
 
         public void CreateTransaction(TransactionVM transVm)
         {
-            if(transVm.type == "Bill")
-            {
-                transVm.amount_total *= -1;
-            }
+            
             var transaction = new Transaction
                 {
                     SenderId = transVm.sender_id,
@@ -109,15 +96,19 @@ namespace Project1Phase1.Repositories
             _context.SaveChanges();
 
             decimal amountToReceiver;
-            if (transVm.amount_of_users > 1)
-            {
+            //if (transVm.amount_of_users > 1)
+            //{
                 //get amount to receiver by dividing total-amount by amount-of-users + 1 sender 
                 amountToReceiver = transVm.amount_total / (transVm.amount_of_users + 1);
-            }else
-            {
-                amountToReceiver = transVm.amount_total;
-            }
-            foreach (string userId in transVm.recievers)
+            //}else
+            //{
+            //amountToReceiver = transVm.amount_total;
+            //}
+            //if (transVm.type == "Bill")
+            //{
+            //    amountToReceiver *= -1;
+            //}
+            foreach (string userId in transVm.receivers)
             {
                 CreateRoommateTransaction(transaction.TransactionId, 
                     userId, amountToReceiver);

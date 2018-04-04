@@ -100,9 +100,9 @@
                 <th>Total Amount</th>
                 <th>Amount per person</th>
             </tr>
-
             @foreach (var transaction in Model.OneRoommateTranstactions)
             {
+                
                 <tr>
                     
                     <td>@transaction.Transaction.DateTime</td>
@@ -120,10 +120,19 @@
         <lable>Total balance:</lable>
         <span style="border: 2px solid black">$@Model.RelationshipBalance</span>
     </div>
+    @{
+        DateTime now = DateTime.Now;
+    }
     <div class="row">
-        <form method="get" action="#">
-            <lable>Payment amount:</lable>
-            <input type="text" />
+        <form asp-controller="Home" asp-action="HandleTransaction">
+            <label>Payment amount:</label>
+            <input type="hidden" name="name" value="Payment" />
+            <input type="hidden" name="type" value="Payment"/>
+            <input type="hidden" name="sender_id" value="@Model.CurrentUser.RoommateId" />
+            <input type="hidden" name="date" value="@now" />
+            <input type="hidden" name="amount_of_users" value="1" />
+            <input type="hidden" name="receivers" value="@Model.Roommate.RoommateId" />
+            <input type="number" name="amount_total"/>
             <button type="submit">Make a payment</button>
         </form>
     </div>

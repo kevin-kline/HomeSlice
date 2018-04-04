@@ -17,7 +17,7 @@
     string relationshipBalanceColor = "forestgreen";
 }
 
-@if (Model.CurrentUser.Balance > 0)
+@if (Model.CurrentUser.Balance < 0)
 {
     totalBalanceColor = "red";
 }
@@ -77,8 +77,8 @@
                         <th style="text-align: center"></th>
                     </tr>
                     @foreach (var roommate in Model.RoomiesRelationships)
-            {
-                var balanceOwed = roommate.Balance;
+                    {
+                        var balanceOwed = roommate.Balance;
 
                         <tr>
                             <td>@Html.ActionLink(
@@ -93,15 +93,15 @@
                                 )
                             </td>
                             <td><img src="~/images/profile-pictures.png" class="img-rounded" width="80" /></td>
-                            @if (roommate.Balance > 0)
-                {
-                    balanceOwed *= -1;
+                            @if (balanceOwed < 0)
+                            {
+                                relationshipBalanceColor = "red";
                                 <td><i>you owe</i></td>
                                 <td><span style="color:@relationshipBalanceColor">$@Math.Round(Math.Abs(balanceOwed), 2)</span></td>
                             }
-                            else if (roommate.Balance < 0)
+                            else if (balanceOwed > 0)
                             {
-                                relationshipBalanceColor = "red";
+                                relationshipBalanceColor = "forestgreen";
                                 <td><i>owes you</i></td>
                                 <td><span style="color:@relationshipBalanceColor">$@Math.Round(Math.Abs(balanceOwed), 2)</span></td>
                             }
