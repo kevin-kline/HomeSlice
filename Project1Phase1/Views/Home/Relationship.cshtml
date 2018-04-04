@@ -84,8 +84,37 @@
             </tbody>
         </table>
 
-
+       
     </div>
+    <hr />
+    <div class="row">
+        <h2>@Model.CurrentUser.FirstName & @Model.Roommate.FirstName Relationship</h2>
+    </div>
+    <h2>Transactions List</h2>
+    <table class="table">
+       
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Total Amount</th>
+                <th>Amount per person</th>
+            </tr>
+
+            @foreach (var transaction in Model.OneRoommateTranstactions)
+            {
+                <tr>
+                    
+                    <td>@transaction.Transaction.DateTime</td>
+                    <td>@transaction.Transaction.Type</td>
+                    <td>@transaction.Transaction.Name</td>
+                    <td>@transaction.Transaction.AmountTotal</td>
+                    <td>@transaction.AmountToReceiver</td>
+                    
+                </tr>
+            }
+
+    </table>
     <br />
     <div class="row" style="font-size: 2em">
         <lable>Total balance:</lable>

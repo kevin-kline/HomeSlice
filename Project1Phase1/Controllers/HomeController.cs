@@ -31,11 +31,8 @@ namespace Project1Phase1.Controllers
         {
             return View();
         }
-        public IActionResult JoinCreateHousehold()
-        {
-            return View();
-        }
-         [Authorize(Roles = "HomeAdmin")] 
+                
+        [Authorize(Roles = "HomeAdmin")] 
         public IActionResult ManageHousehold()
         {
             return View();
@@ -89,7 +86,7 @@ namespace Project1Phase1.Controllers
             string userId = User.getUserId();
             Roommate currentSignedInUser = roomieRepo.GetRoommate(userId);
             Roommate roommate = roomieRepo.GetRoommate(roommateId);
-            IEnumerable<RoommateTransaction> transactions = transRepo.GetAllRelationshipTransactions(userId, roommateId);
+            List<RoommateTransaction> transactions = transRepo.GetAllRelationshipTransactions(userId, roommateId).ToList();
             decimal relationshipBalance = transRepo.GetIndividualRelationshipBalance(userId, roommateId);
 
             RelationshipVM relVM = new RelationshipVM()

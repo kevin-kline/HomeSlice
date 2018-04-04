@@ -97,7 +97,7 @@ namespace Project1Phase1.Controllers
                     {
                         if (roommate.HomeId == null)
                         {
-                            return RedirectToAction("JoinCreateHousehold", "Home");
+                            return RedirectToAction("JoinCreateHousehold", "Household");
                         }
                         else
                         {
@@ -286,7 +286,7 @@ namespace Project1Phase1.Controllers
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     //_logger.LogInformation("User created a new account with password.");
                     // ***********
-                    //return RedirectToAction("JoinCreateHousehold", "Home");
+                    //return RedirectToAction("JoinCreateHousehold", "Household");
 
                     ModelState.AddModelError(string.Empty, "please complete your registration using the link that has been sent to your email.");
                     return View(model);
@@ -405,7 +405,7 @@ namespace Project1Phase1.Controllers
             //need to sign in the user before redirecting to next page
             await _signInManager.SignInAsync(user, isPersistent: false);
 
-            return RedirectToAction("JoinCreateHousehold", "Home");
+            return RedirectToAction("JoinCreateHousehold", "Household");
             //return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 

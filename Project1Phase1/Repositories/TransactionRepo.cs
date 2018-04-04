@@ -1,4 +1,5 @@
-﻿using Project1Phase1.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Project1Phase1.Data;
 using Project1Phase1.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -83,6 +84,7 @@ namespace Project1Phase1.Repositories
         private IEnumerable<RoommateTransaction> GetRelationshipTransactionsOneWay(string senderId, string receiverId)
         {
             IEnumerable<RoommateTransaction> oneWayRoomieTransactions = _context.RoommateTransactions
+                .Include("Transaction")
                 .Where(i => i.ReceiverId == receiverId)
                 .Where(i => i.Transaction.SenderId == senderId);
             return oneWayRoomieTransactions;
