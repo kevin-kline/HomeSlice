@@ -15,5 +15,9 @@ namespace Project1Phase1.ViewModels
     {
         public RoomieAndBalance CurrentUser { get; set; }
         public List<RoomieAndBalance> RoomiesRelationships { get; set; }
+        [DisplayName("Home ID")]
+        public string homeId { get; set; }
+        [DisplayName("Home Name")]
+        public string homeName { get; set; }
     }
 }
