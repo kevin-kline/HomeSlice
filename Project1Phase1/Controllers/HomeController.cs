@@ -63,8 +63,8 @@ namespace Project1Phase1.Controllers
             {
                 CurrentUser = currentUser,
                 RoomiesRelationships = new List<RoomieAndBalance>(),
-                
-            };
+
+        };
             //get all other balances with roomies, put them into a VM,
             //which then goes into another bigger VM
             if (roommates != null) {

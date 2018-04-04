@@ -1,119 +1,99 @@
 ﻿@model Project1Phase1.ViewModels.AddTransactionVM
-
 @{
     ViewData["AddBill"] = "Add Bill";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2>@ViewData["AddBill"]</h2>
-
-@{ 
+@{
     DateTime now = DateTime.Now;
 }
-       
-<style>
 
+<style>
     ul {
         list-style: none;
     }
-
 </style>
-
+<script>
+    window.onload = init
+    function init() {
+        $('#select').change(function () {
+            if ($('#other').is(':selected')) {
+                $('#otherInput').show();
+            }
+        });
+    }
+</script>
 <div class="row">
     <div class="col-md-6">
-
         <form asp-action="HandleTransaction" method="post">
-
-            <label for="name">Name of Bill</label> <br/>
-            <select class="form-control" name="name">
+            <label for="name">Name of Bill</label> <br />
+            <select class="form-control" name="name" id="select">
                 <option value="Rent">Rent</option>
                 <option value="Hydro">Hydro</option>
                 <option value="Internet">Internet</option>
                 <option value="Hydro">Hydro</option>
-                <option value="Hydro">Hydro</option>
-                <option value="text" id="other">Other</option>
+                <option id="other">Other</option>
             </select>
+            <div id="otherInput" hidden>
+                <label name="name">Please input the bill name:</label>
+                <input type="text" name="name" />
+            </div>
 
-            @*<div id="container"></div>
-            <script>
-                if ($('#other').selected) {
-                    var newTextBox = document.createElement("input");
-                    newTextBox.type = "text";
-                    var container = document.getElementById("container");
-                    container.appendChild(newTextBox);
-                }
-            </script>*@
 
             <br /><br />
-
             <label for="type">Type</label> <br />
-                <select class="form-control" name="type">
-                    <option value="Bill">Send A Bill</option>
-                    <option value="Payment">Make A Payment</option>
-                </select>
-
+            <select class="form-control" name="type">
+                <option value="Bill">Send A Bill</option>
+                <option value="Payment">Make A Payment</option>
+            </select>
             <br /><br />
-
             <label for="amount_total">Total Amount</label> <br />
             <input type="hidden" value="@now" name="date" />
             <input type="hidden" value="@Model.currentUser.RoommateId" name="sender_id" />
-            <input  class="form-control" type="number" name="amount_total" />
-
-            <br/><br />
-
+            <input class="form-control" type="number" name="amount_total" />
+            <br /><br />
             <label for="roomates">Roommates:</label> <br />
             @{ var counter = 0; }
             <ul>
-                    @foreach (var roommate in Model.otherRoommates) {
-                        <li>
-                            <input type="checkbox" name="recievers" value="@roommate.RoommateId" />
-                            <label>@roommate.FirstName</label>
-                        </li>
-                        counter += 1;
-                    }
+                @foreach (var roommate in Model.otherRoommates)
+                {
+                    <li>
+                        <input type="checkbox" name="recievers" value="@roommate.RoommateId" />
+                        <label>@roommate.FirstName</label>
+                    </li>
+                    counter += 1;
+                }
             </ul>
-
             <br /><br />
-
-            <input type="submit" />
-
+            <input type="submit" class="btn btn-info" value="Submit" />
         </form>
-
     </div>
 </div>
-
 @*@foreach (var item in Model.ExportingGroups)
-{
-    <tr>
-        <td class="js-export-checkbox">
-            @Html.CheckBoxFor(modelItem => item.ToExport)
-        </td>
-    </tr>
-}*@
-
-    @*<div class="row">
+    {
+        <tr>
+            <td class="js-export-checkbox">
+                @Html.CheckBoxFor(modelItem => item.ToExport)
+            </td>
+        </tr>
+    }*@
+@*<div class="row">
         <div class="col-md-6">
             <h4>Frequency</h4>
             <hr />
-
             <form name="form" id="form" method="post" asp-action="AddBill">
-
                 <input type="radio" id="radioButton1" name="radioButton" value="in-campus" />
                 <label for="radioButton1">One Time</label>
                 <br/>
                 <input type="radio" id="radioButton2" name="radioButton" value="of-campus" />
                 <label for="radioButton2">Recurring</label>
-
                 <br/><br/>
-
                 <select class="form-control" name="noOptions" id="noOptions" style="display: none">
                     <option value="Choose an Option" selected="selected">Choose One-Time or Recurring Option</option>
                 </select>
-
                 <select class="form-control" name="icOptions" id="icOptions" style="display: none">
                     <option value="Choose an Option" selected="selected">One-Time Payment</option>
                 </select>
-
                 <select class="form-control" name="ocOptions" id="ocOptions" style="display: none">
                     <option value="Choose an Option" selected="selected">Recurring</option>
                     <option value="ocOption1">Weekly</option>
@@ -123,12 +103,10 @@
                     <option value="ocOption1">Bi-Annually</option>
                     <option value="ocOption2">Annually</option>
                 </select>
-
                 <select class="form-control" name="allOptions" id="allOptions" style="display: block">
                     <option value="Choose an Option" selected="selected">Choose One-Time or Recurring Option</option>
                 </select>
             </form>
-
             <script>
                 window.document.getElementById("noOptions").style.display = "block";
                 window.document.getElementById("allOptions").style.display = "none";
@@ -136,9 +114,7 @@
                     var form = window.document.getElementById("form");
                     var icOptions = window.document.getElementById("icOptions");
                     var ocOptions = window.document.getElementById("ocOptions");
-
                     window.document.getElementById("noOptions").style.display = "none";
-
                     if (form.radioButton1.checked) {
                         ocOptions.style.display = "none";
                         icOptions.style.display = "block";
@@ -148,7 +124,6 @@
                         ocOptions.style.display = "block";
                         ocOptions.selectedIndex = 0;
                     }
-
                 }
                 window.document.getElementById("radioButton1").onclick = changeOptions;
                 window.document.getElementById("radioButton2").onclick = changeOptions;
@@ -156,8 +131,7 @@
             <br />
         </div>
     </div>*@
-
-    @*<div class="row">
+@*<div class="row">
         <div class="col-md-6">
             <h4>Amount</h4>
             <hr />
@@ -166,22 +140,16 @@
         </div>
     </div>
     <br />
-
     <br />
     <button type="submit" class="btn btn-default" onclick="billAlert()">Create Bill</button>
-
     <script language="javascript" type="text/javascript">
-
         function billAlert() {
             alert("Are you sure all information about this bill is correct?");
-
             window.location.href = '/Home/ManageBills';
-            
+
             //location.href = '....';
         }
-
     </script>*@
-
-    @section Scripts {
-        @await Html.PartialAsync("_ValidationScriptsPartial")
-    }
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
