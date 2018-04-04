@@ -31,11 +31,8 @@ namespace Project1Phase1.Controllers
         {
             return View();
         }
-        public IActionResult JoinCreateHousehold()
-        {
-            return View();
-        }
-         [Authorize(Roles = "HomeAdmin")] 
+                
+        [Authorize(Roles = "HomeAdmin")] 
         public IActionResult ManageHousehold()
         {
             return View();
@@ -63,8 +60,8 @@ namespace Project1Phase1.Controllers
             {
                 CurrentUser = currentUser,
                 RoomiesRelationships = new List<RoomieAndBalance>(),
-                
-            };
+
+        };
             //get all other balances with roomies, put them into a VM,
             //which then goes into another bigger VM
             if (roommates != null) {

@@ -37,7 +37,7 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <!-- <li><a asp-area="" asp-controller="Home" asp-action="JoinCreateHousehold">Join/Create Household</a></li>
                      <li><a asp-area="" asp-controller="Home" asp-action="ManageHousehold">Manage Household</a></li>-->
-                    @if (User.IsInRole("Roommate"))
+                    @if (User.Identity.IsAuthenticated)
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="Profile">Profile</a></li>
                     }

@@ -7,6 +7,8 @@ using Project1Phase1.Services;
 using Project1Phase1.Data;
 using Project1Phase1.Repositories;
 using Project1Phase1.ViewModels;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Project1Phase1.Controllers
 {
@@ -23,11 +25,18 @@ namespace Project1Phase1.Controllers
             _serviceProvider = serviceProvider;
         }
 
-        public IActionResult Index()
+        [Authorize]
+        [HttpGet]
+        public IActionResult JoinCreateHousehold(string errorMessage)
         {
+            if (errorMessage != null)
+            {
+                ViewBag.Error = errorMessage;
+            }
             return View();
         }
 
+        [ValidateRecaptcha]
         public IActionResult Create(HomeVM home)
         {
             HouseholdRepo householdRepo = new HouseholdRepo(_context);
@@ -41,9 +50,11 @@ namespace Project1Phase1.Controllers
 
                 return RedirectToAction("Join", _home);
             }
-            return RedirectToAction("JoinCreateHousehold", "Home");
+            
+            return RedirectToAction(nameof(JoinCreateHousehold), new { errorMessage = "Failed to create the household. Try a new name, please."});
         }
 
+        [ValidateRecaptcha]
         public IActionResult Join(HomeVM home)
         {
             HouseholdRepo householdRepo = new HouseholdRepo(_context);
@@ -65,7 +76,7 @@ namespace Project1Phase1.Controllers
                 }
             }
             
-            return RedirectToAction("JoinCreateHousehold", "Home");
+            return RedirectToAction(nameof(JoinCreateHousehold), new { errorMessage = "Failed to join the household. Make sure the Home Name and Household Password are correct, please." });
         }
 
         //public IActionResult Invite(string householdName, string email)

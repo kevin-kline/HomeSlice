@@ -21,46 +21,46 @@
 {
     totalBalanceColor = "red";
 }
-<div align="center">
-    <br />
-    <br />
 
-    <h2 text-align="centre">Hey, @Model.CurrentUser.Roommate.FirstName!</h2>
+        <div align="center">
+            <br />
+            <br />
 
-    <br />
+            <h2 text-align="centre">Hey, @Model.CurrentUser.Roommate.FirstName!</h2>
 
-        <div class="row">
-            <table>
-                <colgroup>
-                    <col style="width:40%">
-                    <col style="width:30%">
-                    <col style="width:20%">
-                    <col style="width:10%">
-                </colgroup>
-                <tbody style="text-align: center">
-                    <tr>
-                        <th style="text-align: center"></th>
-                        <th style="text-align: center"></th>
-                        <th style="text-align: center"></th>
-                        <th style="text-align: center"></th>
-                    </tr>
-                    <tr>
-                        <td><strong>@Model.CurrentUser.Roommate.FirstName</strong></td>
-                        <td><img src="~/images/profile-pictures.png" width="80" class="img-rounded" /></td>
-                        <td><i>your balance with the household is</i></td>
-                        <td><span style="color:@totalBalanceColor">$@Math.Round(Math.Abs(Model.CurrentUser.Balance), 2)</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <br />
 
-        <br />
-        <br />
+            <div class="row">
+                <table>
+                    <colgroup>
+                        <col style="width:40%">
+                        <col style="width:30%">
+                        <col style="width:20%">
+                        <col style="width:10%">
+                    </colgroup>
+                    <tbody style="text-align: center">
+                        <tr>
+                            <th style="text-align: center"></th>
+                            <th style="text-align: center"></th>
+                            <th style="text-align: center"></th>
+                            <th style="text-align: center"></th>
+                        </tr>
+                        <tr>
+                            <td><strong>@Model.CurrentUser.Roommate.FirstName</strong></td>
+                            <td><img src="~/images/profile-pictures.png" width="80" class="img-rounded" /></td>
+                            <td><i>your balance with the household is</i></td>
+                            <td><span style="color:@totalBalanceColor">$@Math.Round(Math.Abs(Model.CurrentUser.Balance), 2)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <h2 text-align="centre">Roommates</h2>
+            <br />
+            <br />
 
-        <br />
+            <h2 text-align="centre">Roommates</h2>
 
+<<<<<<< HEAD
         <div class="row">
             <table>
                 <colgroup>
@@ -79,9 +79,32 @@
                     @foreach (var roommate in Model.RoomiesRelationships)
                     {
                         var balanceOwed = roommate.Balance;
+=======
+            <br />
 
+            <div class="row">
+                <table>
+                    <colgroup>
+                        <col style="width:40%">
+                        <col style="width:30%">
+                        <col style="width:20%">
+                        <col style="width:10%">
+                    </colgroup>
+                    <tbody style="text-align: center">
                         <tr>
-                            <td>@Html.ActionLink(
+                            <th style="text-align: center"></th>
+                            <th style="text-align: center"></th>
+                            <th style="text-align: center"></th>
+                            <th style="text-align: center"></th>
+                        </tr>
+                        @foreach (var roommate in Model.RoomiesRelationships)
+            {
+                var balanceOwed = roommate.Balance;
+>>>>>>> 31fea2a267e1b9d2dd95c6b181b6013c6c9fc30d
+
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(
                                     linkText: roommate.Roommate.FirstName,
                                     actionName: "Relationship",
                                     controllerName: "Home",
@@ -93,16 +116,33 @@
                                 )
                             </td>
                             <td><img src="~/images/profile-pictures.png" class="img-rounded" width="80" /></td>
+<<<<<<< HEAD
                             @if (balanceOwed < 0)
                             {
                                 relationshipBalanceColor = "red";
                                 <td><i>you owe</i></td>
+=======
+                            @if (roommate.Balance > 0)
+<<<<<<< HEAD
+                            {
+                                //balanceOwed *= -1;
+=======
+                {
+                    balanceOwed *= -1;
+>>>>>>> cc06899dad36612c97de875ba65c068e1d270af3
+                                <td><i>owes you</i></td>
+>>>>>>> 31fea2a267e1b9d2dd95c6b181b6013c6c9fc30d
                                 <td><span style="color:@relationshipBalanceColor">$@Math.Round(Math.Abs(balanceOwed), 2)</span></td>
                             }
                             else if (balanceOwed > 0)
                             {
+<<<<<<< HEAD
                                 relationshipBalanceColor = "forestgreen";
                                 <td><i>owes you</i></td>
+=======
+                                relationshipBalanceColor = "red";
+                                <td><i>you owe</i></td>
+>>>>>>> 31fea2a267e1b9d2dd95c6b181b6013c6c9fc30d
                                 <td><span style="color:@relationshipBalanceColor">$@Math.Round(Math.Abs(balanceOwed), 2)</span></td>
                             }
                             else
@@ -111,25 +151,28 @@
                                 <td>@roommate.Balance</td>
                             }
                         </tr>
-                    }
-                </tbody>
-            </table>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
-    <br />
-    <div class="row">
-        @*Will: turns  footer options into a nav bar of sorts*@
-        <nav class="navbar navbar-dark bg-dark">
-            <!-- Navbar content -->
 
-            <a asp-controller="Home" asp-action="AddBill" class="col-lg-4 text-center">Add a Bill</a>
-            <a asp-controller="Home" asp-action="ManageBills" class="col-lg-4 text-center">Manage your Bills</a>
-            @if (User.IsInRole("HomeAdmin"))
+
+        <br />
+        <div class="row">
+            @*Will: turns  footer options into a nav bar of sorts*@
+            <nav class="navbar navbar-dark bg-dark">
+                <!-- Navbar content -->
+
+                <a asp-controller="Home" asp-action="AddBill" class="col-lg-4 text-center">Add a Bill</a>
+                <a asp-controller="Home" asp-action="ManageBills" class="col-lg-4 text-center">Manage your Bills</a>
+                @if (User.IsInRole("HomeAdmin"))
             {
-                <a asp-controller="Home" asp-action="ManageHousehold" class="col-lg-4 text-center">Manage Household</a>
-            }
-        </nav>
-    </div>
+                    <a asp-controller="Home" asp-action="ManageHousehold" class="col-lg-4 text-center">Manage Household</a>
+                }
+            </nav>
+        </div>
 
-    <br />
+
+        <br />
