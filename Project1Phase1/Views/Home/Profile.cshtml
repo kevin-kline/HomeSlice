@@ -94,15 +94,15 @@
                             </td>
                             <td><img src="~/images/profile-pictures.png" class="img-rounded" width="80" /></td>
                             @if (roommate.Balance > 0)
-                {
-                    balanceOwed *= -1;
-                                <td><i>you owe</i></td>
+                            {
+                                //balanceOwed *= -1;
+                                <td><i>owes you</i></td>
                                 <td><span style="color:@relationshipBalanceColor">$@Math.Round(Math.Abs(balanceOwed), 2)</span></td>
                             }
                             else if (roommate.Balance < 0)
                             {
                                 relationshipBalanceColor = "red";
-                                <td><i>owes you</i></td>
+                                <td><i>you owe</i></td>
                                 <td><span style="color:@relationshipBalanceColor">$@Math.Round(Math.Abs(balanceOwed), 2)</span></td>
                             }
                             else

@@ -19,30 +19,42 @@
 
 </style>
 
+<script>
+    window.onload = init
+    function init() { 
+        $('#select').change(function () {
+            if ($('#other').is(':selected')) {
+                $('#otherInput').show();
+            }
+        });
+        $('#userInput').change(function () {
+            $('#other').val($('#userInput').val());
+        });
+    }
+
+</script>
+
+
 <div class="row">
     <div class="col-md-6">
 
         <form asp-action="HandleTransaction" method="post">
 
             <label for="name">Name of Bill</label> <br/>
-            <select class="form-control" name="name">
+            <select class="form-control" name="name" id="select">
                 <option value="Rent">Rent</option>
                 <option value="Hydro">Hydro</option>
                 <option value="Internet">Internet</option>
                 <option value="Hydro">Hydro</option>
-                <option value="Hydro">Hydro</option>
-                <option value="text" id="other">Other</option>
+                <option value="" id="other">Other</option>
             </select>
 
-            @*<div id="container"></div>
-            <script>
-                if ($('#other').selected) {
-                    var newTextBox = document.createElement("input");
-                    newTextBox.type = "text";
-                    var container = document.getElementById("container");
-                    container.appendChild(newTextBox);
-                }
-            </script>*@
+            <div id="otherInput" hidden>
+                <label name="name">Please input the bill name:</label>
+                <input type="text" name="name" id="userInput"/>
+            </div>
+        
+        
 
             <br /><br />
 
@@ -75,7 +87,7 @@
 
             <br /><br />
 
-            <input type="submit" />
+            <input type="submit"  class="btn btn-info" value="Submit"/>
 
         </form>
 
